@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chicken Invaders</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+	<header>
+        <h1>Chicken Invaders</h1>
+		<div class="logo">
+		</div>
+	</header>
+	<nav class="menu">
+		<ul>
+			<li class="homeButton" onclick="switchScreen(this)"     >Home</a></li>
+			<li class="loginButton" onclick="switchScreen(this)"    >Login</a></li>
+			<li class="registerButton" onclick="switchScreen(this)" >Register</a></li>
+            <li class="aboutButton" onclick="switchScreen(this)"    > About</li>
+
+		</ul>
+	</nav>
+	<dialog class="modal-box" id="about">
+		<h2>Modal Title</h2>
+		<h1>About Chicken Invaders</h1>
+		<p> Again presented by Denis Rize and Lior Tkach.</p>
+		<button id="close-modal"> Close </button>
+	</dialog>
+	<div class="content">
+		<div id="home">
+			<h1>Welcome to Chicken Invaders</h1>
+			<p>We are a team of avengers fighting against the chicken invasion. Join us and help us save the world from the poultry threat!</p>
+			<p>Developed by: Lior Tkach - 208892166, Denis Rize - 316476431. </p>
+			<p>Home Websites: Lior Tkach - <a href="">Svika Pick</a>, Denis Rize - <a href="https://web-development-environments-2023.github.io/316476431/">My grandmother</a></p>
+
+			<button type="submit" class="registerButton" onclick="switchScreen(this)"  >Register</button>
+			<button type="submit" class="loginButton"    onclick="switchScreen(this)"  >Login</button>
+		</div>
+		<div id="login">
+			<h2>Login</h2>
+			<form id="loginForm">
+
+				<label for="username">Username:</label>
+				<input type="text" id="loginUsername" name="username" required>
+
+
+				<label for="password">Password:</label>
+				<input type="password" id="loginPassword" name="password" required>
+
+				<button type="submit">Sign in</button>
+			</form>
+		</div>
+        <div id="register">
+			<h2>Register</h2>
+			<form id="registerForm">
+				<label for="registerUsername">Username:</label>
+				<input type="text" id="registerUsername" name="username" required>
+
+				<label for="registerPassword">Password:</label>
+				<input type="password" id="registerPassword" name="password" required>
+
+				  <label for="passwordValidation">Repeat Password:</label>
+				  <input type="password" id="passwordValidation" name="password" required>
+
+				  <label for="passwordValidation">Email Address:</label>
+				  <input type="email" id="email" name="email" required>
+
+				  <label for="firstName">First Name:</label>
+				  <input type="text" id="firstName" name="firstName" required>
+
+				  <label for="lastName">Last Name:</label>
+				  <input type="text" id="lastName" name="lastName" required>
+
+				  <label for="dob">Date of Birth:</label>
+				  <input type="date" id="dob" name="dob" required>
+
+				  <button type="submit">Sign up</button>
+			  </form>
+        </div>
+		<div id="configuration">
+			<h1>Choose your preferences:</h1>
+			<form id="configurationForm">
+
+				<label for="shootKey">Choose you favorite key to shoot:</label>
+				<input type="text" id="shootKey" name="shootKey" required>
+
+				<label for="timeGame">Choose Time for game:</label>
+				<p id="rangeValue">2</p>
+				<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2" onchange="updateTimeValue(this.value)">
+
+				<button type="submit">Start Game</button>
+
+			</form>
+		</div>
+        <div id="game">
+			<h1>Lets play:</h1>
+			<canvas id="gameCanvas" width="600" height="400"></canvas>
+        </div>
+    </div>
+
+
+    <script src="chicken.js"></script>
+</body>
+<footer>
+    <p>Developed by Denis Rize and Lior Tkach</p>
+    <p>316476431_208821988</p>
+    <p>Web development course second assignment.</p>
+</footer>
+</html>
