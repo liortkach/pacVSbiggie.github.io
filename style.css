@@ -1,37 +1,32 @@
 body {
-    background-image: url(images/world.jpg);
+    background-image: url(images/meteorShower.png);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    height: 100%;
+    width: 100%;
 }
 .header {
     text-align: center;
-    font-size: 36px;
     color: white;
-    margin-top: 50px;
-    margin-bottom: 20px;
-}
-header h1 {
-    color: white;
+    margin-top: 5%;
 }
 .logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 200px;
-    height: 200px;
-    background-image: url("images/logo.png");
+    padding: 5%;
+    background-image: url("images/aalogo.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    margin-bottom: 20px;
 }
+
 #mute-btn {
     position: fixed;
     top: 0;
     right: 0;
-    color: white;
     background-image: url('images/speaker-filled-audio-tool.png');
     background-repeat: no-repeat;
     background-position: center;
@@ -41,18 +36,17 @@ header h1 {
   }
 .menu {
     position: absolute;
-    top: 50px;
-    left: 50px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
+    top: 2%;
+    left: 2%;
+    background-color: rgba(138, 85, 139, 0.8);
+    padding: 2%;
     border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    margin: 20px;
+    margin: 2%;
 }
-#home a {
-    color: white;
+a {
+    color: rgba(255, 255, 255);
     font-weight: bold;
+    text-decoration: none;
 
 }
 .menu ul {
@@ -61,55 +55,143 @@ header h1 {
     padding: 0;
 }
 .menu li {
-    margin-bottom: 10px;
-    color: black;
+    margin-bottom: 20%;
+    color: rgb(0, 0, 0);
     text-decoration: none;
-    font-size: 24px;
+    font-size: 150%;
     font-weight: bold;
     cursor: pointer;
-    border-radius: 5px;
-
-
 }
 .menu li:hover {
-    color: #570cb9;
+    color: #ffffff;
 }
 .content {
+    height: 100%;
     margin-left: 20%;
-    padding: 5%;
-    color: white;
+    padding: 2%;
+    color: rgba(255, 255, 255);
     font-size: 24px;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+.container {
+    display: flex;
+
+}
+
+.child-container {
+    margin: 5%;
+}
+label,input {
+    display: block;
+    margin-bottom: 10%;
+}
+input{
+    width: 150%;
+    height: 5%;
+}
+.config-container{
+    gap: 2%;
+    display: flex;
+}
+.config-container input{
+    margin-top: auto;
+    width: 30%;
+}
+#rangeValue {
+    margin-top: 1%;
+    margin-left: 2%;
+    
 }
 footer {
+
     text-align: center;
     font-size: 14px;
     color: white;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 10%;
+    margin-bottom: 2%;
 }
 button {
     display: inline-block;
-    padding: 8px 16px;
-    font-size: 16px;
-    margin: 10px;
+    padding: 1% 4%;
+    font-size: 80%;
+    margin-top: 1%;
+    margin-right: 2%;
     font-weight: bold;
     text-decoration: none;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 5%;
     border: none;
     color: #ffffff;
-    background-color: #570cb9;
+    background-color: rgba(138, 85, 139, 0.8);
     cursor: pointer;
 
+  }
+  .big-btn {
+    width: 150%;
+    height: 20%;
+
+  }
+  #start-btn{
+    width: 100%;
   }
   button:hover{
     color: #000000;
   } 
-  #gameCanvas{
-    border: 1px solid black;
-  }
-  label,input {
+  
+#gameCanvas{
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgb(255, 255, 255);
+}
+.alert {
     display: block;
-    margin-bottom: 10px;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    width: 20%;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    display: none;
+}
+  
+.success {
+    background-color: #4CAF50;
+    color: white;
+}
+  
+.warning {
+    background-color: #f44336;
+    color: white;
   }
+  
+.close-btn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+.close-btn:hover {
+    color: black;
+}
+  
+.alert-message {
+    margin-left: 15px;
+}
+.screen {
+  height: 100%;
+  width: 100%;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+
+
+

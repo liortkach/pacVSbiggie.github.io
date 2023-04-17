@@ -12,12 +12,23 @@
 </head>
 <body>
 	<header>
-        <h1>Chicken Invaders</h1>
 		<div class="logo">
 		</div>
 		<button id="mute-btn"></button>
 
+		<div class="alert" id="success-alert">
+			<span class="close-btn">&times;</span>
+			<strong>Success!</strong>
+			<span class="alert-message"></span>
+		  </div>
+		  
+		  <div class="alert" id="warning-alert">
+			<span class="close-btn">&times;</span>
+			<strong>Error!</strong>
+			<span class="alert-message"></span>
+		  </div>		  
 	</header>
+
 	<nav class="menu">
 		<ul>
 			<li class="home-btn" onclick="switchScreen(this.className)"     >Home</li>
@@ -35,8 +46,9 @@
 		<p> Again presented by Denis Rize and Lior Tkach.</p>
 		<button id="close-modal"> Close </button>
 	</dialog>
+
 	<div class="content">
-		<div id="home">
+		<div class="screen" id="home">
 			<h1>Welcome to Chicken Invaders</h1>
 			<p>We are a team of avengers fighting against the chicken invasion. Join us and help us save the world from the poultry threat!</p>
 			<p>Developed by: Lior Tkach - 208892166, Denis Rize - 316476431. </p>
@@ -45,91 +57,104 @@
 			<button type="submit" class="register-btn" onclick="switchScreen(this.className)"  >Register</button>
 			<button type="submit" class="login-btn"    onclick="switchScreen(this.className)"  >Log-in</button>
 		</div>
-		<div id="login">
-			<h2>Login</h2>
-			<form id="loginForm">
+        <div class="screen" id="register">
 
-				<label for="username">Username:</label>
-				<input type="text" id="loginUsername" name="username" required>
+			<form class="container" id="registerForm">
+				<div class="child-container">
+					<h2>Register</h2>
+				</div>
 
+				<div class="child-container">
 
-				<label for="password">Password:</label>
-				<input type="password" id="loginPassword" name="password" required>
+					<label for="registerUsername">Username:</label>
+					<input type="text" id="registerUsername" name="username" required>
 
-				<button id="submitButton" type="submit">Sign in</button>
+					<label for="registerPassword">Password:</label>
+					<input type="password" id="registerPassword" name="password" required>
+
+					<label for="passwordValidation">Repeat Password:</label>
+					<input type="password" id="passwordValidation" name="password" required>
+
+					<label for="passwordValidation">Email Address:</label>
+					<input type="email" id="email" name="email" required>
+				</div>
+
+				<div class="child-container">
+
+					<label for="firstName">First Name:</label>
+					<input type="text" id="firstName" name="firstName" required>
+
+					<label for="lastName">Last Name:</label>
+					<input type="text" id="lastName" name="lastName" required>
+
+					<label for="dob">Date of Birth:</label>
+					<input type="date" id="dob" name="dob" required>
+
+					<button class="big-btn" type="submit">Sign up</button>
+				</div>
+
+			
+			  </form>
+    	</div>
+		<div class="screen"  id="login">
+			<form class="container" id="loginForm">
+				<div class="child-container">
+					<h2>Login</h2>
+				</div>
+
+				<div class="child-container">
+
+					<label for="loginUsername">Username:</label>
+					<input type="text" id="loginUsername" name="loginUsername" required>
+	
+					<label for="loginPassword">Password:</label>
+					<input type="password" id="loginPassword" name="loginPassword" required>
+	
+					<button class="big-btn" id="submitButton" type="submit">Sign in</button>
+				</div>
 			</form>
 		</div>
-        <div id="register">
-			<h2>Register</h2>
-			<form id="registerForm">
-				<label for="registerUsername">Username:</label>
-				<input type="text" id="registerUsername" name="username" required>
+		<div class="screen"  id="configuration">
+			<form class="container" id="configurationForm">
+				<div class="child-container">
+					<h2>Choose your preferences</h2>
 
-				<label for="registerPassword">Password:</label>
-				<input type="password" id="registerPassword" name="password" required>
+			
+				</div>
 
-				  <label for="passwordValidation">Repeat Password:</label>
-				  <input type="password" id="passwordValidation" name="password" required>
 
-				  <label for="passwordValidation">Email Address:</label>
-				  <input type="email" id="email" name="email" required>
+				<div class="child-container">
 
-				  <label for="firstName">First Name:</label>
-				  <input type="text" id="firstName" name="firstName" required>
+					<div class="config-container">
+						<label for="shootKey">Choose your favorite key to shoot:</label>
+						<input type="text" id="shootKey" name="shootKey" required>
+					</div>
 
-				  <label for="lastName">Last Name:</label>
-				  <input type="text" id="lastName" name="lastName" required>
+					<div class="config-container">
+						<label for="timeGame">Choose Time for game:</label>
+						<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2" onchange="updateTimeValue(this.value)">
+						<p id="rangeValue">2</p>
+					</div>
+					<button id="start-btn" type="submit">Start Game</button>
 
-				  <label for="dob">Date of Birth:</label>
-				  <input type="date" id="dob" name="dob" required>
-
-				  <button type="submit">Sign up</button>
-			  </form>
-    </div>
-	<div id="login">
-			<h2>Login</h2>
-			<form id="loginForm">
-
-				<label for="loginUsername">Username:</label>
-				<input type="text" id="loginUsername" name="loginUsername" required>
-
-				<label for="loginPassword">Password:</label>
-				<input type="password" id="loginPassword" name="loginPassword" required>
-
-				<button type="submit">Sign in</button>
-			</form>
-	</div>
-	<div id="configuration">
-			<h1>Choose your preferences:</h1>
-			<form id="configurationForm">
-
-				<label for="shootKey">Choose your favorite key to shoot:</label>
-				<input type="text" id="shootKey" name="shootKey" required>
-
-				<label for="timeGame">Choose Time for game:</label>
-				<p id="rangeValue">2</p>
-				<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2" onchange="updateTimeValue(this.value)">
-
-				<button id="configButton" type="submit">Start Game</button>
+				<button type="submit">Start Game</button>
 
 			</form>
-	</div>
-    <div id="game">
-			<h1>Lets play:</h1>
-			<canvas id="gameCanvas" width="600" height="400"></canvas>
+		</div>
+    	<div class="screen" id="game">
+			<canvas id="gameCanvas"></canvas>
 			<button type="submit">Play again</button>
 
-     </div>
-</div>
-
+     	</div>
+	</div>
 
     <script src="chicken.js"></script>
 	<script src="gameBasicsJS.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 <footer>
-    <p>Developed by Denis Rize and Lior Tkach</p>
-    <p>316476431_208821988</p>
-    <p>Web development course second assignment.</p>
+	<p>Developed by Denis Rize and Lior Tkach</p>
+	<p>316476431_208821988</p>
+	<p>Web development course second assignment.</p>
 </footer>
 </html>
