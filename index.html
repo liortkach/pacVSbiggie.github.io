@@ -3,6 +3,11 @@
 <head>
 	<title>Chicken Invaders</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+<!-- Home Screen -->
+	<audio id="bgmusic-home" src="audio/space-wave-144298.mp3" autoplay loop></audio>
+
+<!-- game Screen -->
+	<audio id="bgmusic-game" src="audio/password-infinity-123276.mp3" autoplay loop></audio>
 
 </head>
 <body>
@@ -10,13 +15,17 @@
         <h1>Chicken Invaders</h1>
 		<div class="logo">
 		</div>
+		<button id="mute-btn"></button>
+
 	</header>
 	<nav class="menu">
 		<ul>
-			<li class="homeButton" onclick="switchScreen(this)"     >Home</a></li>
-			<li class="loginButton" onclick="switchScreen(this)"    >Login</a></li>
-			<li class="registerButton" onclick="switchScreen(this)" >Register</a></li>
-            <li class="aboutButton" onclick="switchScreen(this)"    > About</li>
+			<li class="home-btn" onclick="switchScreen(this.className)"     >Home</li>
+			<li class="login-btn" onclick="switchScreen(this.className)"    >Log-in</li>
+			<li class="register-btn" onclick="switchScreen(this.className)" >Register</li>
+            <li class="about-btn" onclick="switchScreen(this.className)"    > About</li>
+            <li class="config-btn" onclick="switchScreen(this.className)"   >Game Setting</li>
+            <li class="game-btn" onclick="switchScreen(this.className)"     > Play Game</li>
 
 		</ul>
 	</nav>
@@ -33,8 +42,8 @@
 			<p>Developed by: Lior Tkach - 208892166, Denis Rize - 316476431. </p>
 			<p>Home Websites: Lior Tkach - <a href="">Svika Pick</a>, Denis Rize - <a href="https://web-development-environments-2023.github.io/316476431/">My grandmother</a></p>
 
-			<button type="submit" class="registerButton" onclick="switchScreen(this)"  >Register</button>
-			<button type="submit" class="loginButton"    onclick="switchScreen(this)"  >Login</button>
+			<button type="submit" class="register-btn" onclick="switchScreen(this.className)"  >Register</button>
+			<button type="submit" class="login-btn"    onclick="switchScreen(this.className)"  >Log-in</button>
 		</div>
 		<div id="login">
 			<h2>Login</h2>
@@ -76,30 +85,47 @@
 
 				  <button type="submit">Sign up</button>
 			  </form>
-        </div>
-		<div id="configuration">
+    </div>
+	<div id="login">
+			<h2>Login</h2>
+			<form id="loginForm">
+
+				<label for="loginUsername">Username:</label>
+				<input type="text" id="loginUsername" name="loginUsername" required>
+
+				<label for="loginPassword">Password:</label>
+				<input type="password" id="loginPassword" name="loginPassword" required>
+
+				<button type="submit">Sign in</button>
+			</form>
+	</div>
+	<div id="configuration">
 			<h1>Choose your preferences:</h1>
 			<form id="configurationForm">
 
-				<label for="shootKey">Choose you favorite key to shoot:</label>
+				<label for="shootKey">Choose your favorite key to shoot:</label>
 				<input type="text" id="shootKey" name="shootKey" required>
 
 				<label for="timeGame">Choose Time for game:</label>
 				<p id="rangeValue">2</p>
 				<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2" onchange="updateTimeValue(this.value)">
 
-				<button type="submit">Start Game</button>
+				<button id="configButton" type="submit">Start Game</button>
 
 			</form>
-		</div>
-        <div id="game">
+	</div>
+    <div id="game">
 			<h1>Lets play:</h1>
 			<canvas id="gameCanvas" width="600" height="400"></canvas>
-        </div>
-    </div>
+			<button type="submit">Play again</button>
+
+     </div>
+</div>
 
 
     <script src="chicken.js"></script>
+	<script src="gameBasicsJS.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 <footer>
     <p>Developed by Denis Rize and Lior Tkach</p>

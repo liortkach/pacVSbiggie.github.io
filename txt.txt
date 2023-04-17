@@ -1,0 +1,28 @@
+function checkCollision() {
+  var flag = 0;
+
+  for (let col = 0; col < chickens2DArray.length; col++) {
+    for (let row = 0; row < chickens2DArray[col]; row++) {
+      var chickenElement = chickens2DArray[col][row];
+      if (
+        bullet.visiable == true &&
+        bullet.x <= chickenElement.x + 32 &&
+        chickenElement.x <= bullet.x + 32 &&
+        bullet.y <= chickenElement.y + 32 &&
+        chickenElement.y <= bullet.y + 32
+      ) {
+        ++gamePoints;
+        bullet.visiable = false;
+        setDefaultBullet();
+        hideChicken(chickenElement);
+        setTimeout(() => {
+          flag = 1;
+        }, 100);
+        break; // exit the inner loop when collision is detected
+      }
+    }
+    if (flag) {
+      break; // exit the outer loop when collision is detected
+    }
+  }
+}
