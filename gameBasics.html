@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="gameBasicsJS.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+    <canvas id="canvas" width="600" height="600" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.</canvas>
+    <script>
+        $(document).ready(function () {
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+
+            ctx.beginPath();
+            ctx.arc(225, 225, 150, 0, 2 * Math.PI);
+            ctx.stroke(); //face
+
+            ctx.beginPath();
+            ctx.arc(225 + 50, 150 + 25, 25, 0, 2 * Math.PI);
+            ctx.stroke();// right eye
+            ctx.beginPath();
+            ctx.arc(225 - 50, 150 + 25, 25, 0, 2 * Math.PI);
+            ctx.stroke(); // left eye
+
+            drawSmile()
+
+
+        });
+    </script>
+    
+    <!--For The Coordinates-->
+    <button onclick="drawSmile()">Smile</button>
+    <button onclick="drawSad()">Cry</button>
+    <br><br>
+    <p>X: <span id="xCoord"></span></p>
+    <p>Y: <span id="yCoord"></span></p>
+    <script type="text/javascript">
+        document.addEventListener("mousemove", function (event) {
+            document.getElementById("xCoord").innerHTML = event.clientX;
+            document.getElementById("yCoord").innerHTML = event.clientY;
+        });
+    </script>
+
+</body>
