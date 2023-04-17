@@ -34,7 +34,7 @@ var delta
 var then
 var keysDown
 var keyUp
-
+var prior
 
 window.addEventListener("load", setupGamePlay, false);
 
@@ -76,6 +76,7 @@ function setupGamePlay() {
     chickens2DArray = new Array(5)
     bullet = { speed: 256 }
     egg = { speed: 128 }
+    prior = 1
 
     bulletArray = []
     eggArray = []
@@ -204,7 +205,7 @@ function updatePositions(modifier) {
         }
     }
 
-    var chickenUpdate = TIME_INTERVAL / 15000.0 * chickenVelocity;
+    var chickenUpdate = TIME_INTERVAL / 15000.0 * chickenVelocity * prior;
     startDrawChickensIndexX += chickenUpdate;
 
     for (let j = 0; j < bulletArray.length; j++) {
@@ -277,6 +278,8 @@ function stopTimer() {
 function newGame() {
     reset();
 
+    prior = 1
+
     chickenImage.width = 20
     chickenImage.height = 20
 
@@ -296,6 +299,7 @@ function newGame() {
     then = Date.now();
     intervalTimerMain = setInterval(main, 1);
     intervalTimeEggs = setInterval(createNewEgg, 2000)
+    intervalTimerPrior = setInterval(updatePrior, 7500)
 
 
     for (let col = 0; col < chickens2DArray.length; col++) {
@@ -370,19 +374,17 @@ function drawEggs() {
 
 }
 
-// function drawChickensDefault() {
 
-//     chickenImage.width = 20
-//     chickenImage.height = 20
+function updatePrior() {
+    if (prior < 16) {
+        prior = prior * 2
+    }
+    clearInterval(intervalTimeEggs)
 
-//     for (let col = 0; col < chickens2DArray.length; col++) {
-//         for (let row = 0; row < chickens2DArray[col].length; row++) {
-//             // Draw Chickens in defualt 5X4
-//             ctx.drawImage(chickenImage, defualtChickenCoordinateX + col * (chickenImage.width + padding),
-//                 defualtChickenCoordinateY + row * (chickenImage.height + padding), chickenImage.width, chickenImage.height)
-//         }
-//     }
-// }
+    intervalTimeEggs = setInterval(createNewEgg, 2000 / prior)
+    
+
+}
 
 
 
