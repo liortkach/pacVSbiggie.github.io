@@ -13,6 +13,7 @@ var defualtChickenCoordinateX
 var defualtChickenCoordinateY
 var bullet
 var bulletImage
+var bulletArray
 var chickenVelocity
 var initialChickenVelocity
 var widthMoveSize
@@ -20,11 +21,14 @@ var heightMoveSize
 var padding
 var startDrawChickensIndexX
 var startDrawChickensIndexY
+var egg
+var eggImage
+var eggArray
 
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var gamePoints
 var now
-var intervalTimer
+var intervalTimerMain
 var delta
 var then
 var keysDown
@@ -58,15 +62,22 @@ function setupGamePlay() {
     chickenImage.src = "images/logo.png"
 
 
-    // TODO: Set bullet image
-
     bulletImage = new Image()
     bulletImage.src = "images/fireshot.jpg"
+
+
+    eggImage = new Image()
+    eggImage.src = "images/egg.jpg"
+
 
     // Game Objects
     spaceship = { speed: 256 }
     chickens2DArray = new Array(5)
     bullet = { speed: 256 }
+    egg = { speed: 128 }
+
+    bulletArray = []
+    eggArray = []
 
     keysDown = {}
 
@@ -93,11 +104,11 @@ function setupGamePlay() {
 }
 
 
-// set up interval timer to update game
+/* // set up interval timer to update game
 function startTimer() {
     canvas.addEventListener("click", fireCannonball, false);
-    intervalTimer = window.setInterval(updatePositions, TIME_INTERVAL);
-} // end function startTimer
+    intervalTimerMain = window.setInterval(updatePositions, TIME_INTERVAL);
+} // end function startTimer */
 
 
 function degreesToRadians(degrees) {
@@ -122,7 +133,7 @@ function reset() {
 
     initialChickenVelocity = canvasWidth / 2
 
-    setDefaultBullet()
+    //setDefaultBullet()
     setDefaultChickens()
 }
 
@@ -141,10 +152,10 @@ function setDefaultChickens() {
 }
 
 
-function setDefaultBullet() {
+/* function setDefaultBullet(bullet) {
     bullet.x = spaceship.x + spaceshipImage.width / 2 - bulletImage.width / 2
     bullet.y = spaceship.y - 30
-}
+} */
 
 
 // Blank the chicken who got shot
@@ -169,57 +180,90 @@ function updatePositions(modifier) {
         spaceship.x += spaceship.speed * modifier;
     }
     if (68 in keysDown) { // Player holding d for shoot
-        bullet.visiable = true
+
+        if (bulletArray.length == 0) {
+            let newbullet = new Object()
+            newbullet.visiable = true
+            newbullet.x = spaceship.x
+            newbullet.y = spaceship.y
+            bulletArray.push(newbullet)
+        }
+        else if (bulletArray.length < 2 && bulletArray[bulletArray.length - 1].y < canvasHeight * 0.25) {
+            let newbullet = new Object()
+            newbullet.visiable = true
+            newbullet.x = spaceship.x
+            newbullet.y = spaceship.y
+            bulletArray.push(newbullet)
+        }
     }
 
     var chickenUpdate = TIME_INTERVAL / 15000.0 * chickenVelocity;
     startDrawChickensIndexX += chickenUpdate;
 
-    if (bullet.visiable) {
-        bullet.y -= bullet.speed * modifier
+    for (let j = 0; j < bulletArray.length; j++) {
+        bulletArray[j].y -= bullet.speed * modifier
+
     }
 
+    for (let j = 0; j < eggArray.length; j++) {
+        eggArray[j].y += egg.speed * modifier
 
-    if (bullet.y < bulletImage.height) {
-        bullet.visiable = false
-        setDefaultBullet()
-    }
-    
-
-    if (bullet.visiable == false)
-    {
-        setDefaultBullet()
     }
 
-    
+    if (bulletArray.length > 0 && bulletArray[bulletArray.length - 1].y < bulletImage.height) {
+        bulletArray.pop()
+    }
+
+    if (eggArray.length > 0 && eggArray[eggArray.length - 1].y > canvasHeight - eggImage.height) {
+        eggArray.pop()
+    }
+
+    /*     if (bulletArray[j].visiable == false) {
+            setDefaultBullet(bulletArray[j])
+        } */
+
     collisionDetection()
 }
 // Check if bullet and chicken collider
 function collisionDetection() {
     chickens2DArray.forEach(chickenArr => {
         chickenArr.forEach(chicken => {
-            if (
-                bullet.visiable == true
-                && chicken.visiable == true
-                && bullet.x <= (chicken.x + 32)
-                && chicken.x <= (bullet.x + 32)
-                && bullet.y <= (chicken.y + 32)
-                && chicken.y <= (bullet.y + 32)
-            ) {
-                ++gamePoints;
-                bullet.visiable = false
-                setDefaultBullet()
-                hideChicken(chicken)
-                setTimeout(100)
-                return
-            }
-        })
+            bulletArray.forEach(bullet => {
+                if (
+                    /* bullet.visiable == true
+                    && */ chicken.visiable == true
+                    && bullet.x <= (chicken.x + 32)
+                    && chicken.x <= (bullet.x + 32)
+                    && bullet.y <= (chicken.y + 32)
+                    && chicken.y <= (bullet.y + 32)
+                ) {
+                    ++gamePoints;
+                    bullet.visiable = false
+                    bulletArray.pop()
+                    hideChicken(chicken)
+                    setTimeout(100)
+                    return
+                }
+            })
+        });
     });
+
+    eggArray.forEach(egg => {
+        if (
+            egg.x <= (spaceship.x + 32)
+            && spaceship.x <= (egg.x + 32)
+            && egg.y <= (spaceship.y + 32)
+            && spaceship.y <= (egg.y + 32)
+        ) {
+            // TODO - need to finish what happen when egg hits
+            reset()
+        }
+    })
 }
 
 
 function stopTimer() {
-    window.clearInterval(intervalTimer);
+    window.clearInterval(intervalTimerMain);
 }
 
 
@@ -234,14 +278,18 @@ function newGame() {
 
     bulletImage.width = 10
     bulletImage.height = 10
-    bullet.visiable = false
+
+    eggImage.width = 15
+    eggImage.height = 15
 
     chickenVelocity = initialChickenVelocity
     startDrawChickensIndexX = defualtChickenCoordinateX
     startDrawChickensIndexY = defualtChickenCoordinateY
 
     then = Date.now();
-    intervalTimer = setInterval(main, 1);
+    intervalTimerMain = setInterval(main, 1);
+    intervalTimeEggs = setInterval(createNewEgg, 2000)
+
 
     for (let col = 0; col < chickens2DArray.length; col++) {
         for (let row = 0; row < chickens2DArray[col].length; row++) {
@@ -267,10 +315,8 @@ function draw() {
     ctx.drawImage(bgImage, 0, 0)
     ctx.drawImage(spaceshipImage, spaceship.x, spaceship.y, spaceshipImage.width, spaceshipImage.height)
     drawChickens()
-
-    if (bullet.visiable) {
-        drawBullet()
-    }
+    drawBullets()
+    drawEggs()
 }
 
 
@@ -287,8 +333,8 @@ function drawChickens() {
 
             chickens2DArray[col][row].x = startDrawChickensIndexX + col * (chickenImage.width + padding)
             chickens2DArray[col][row].y = startDrawChickensIndexY + row * (chickenImage.height + padding)
-            
-            if (chickens2DArray[col][row].visiable == true){
+
+            if (chickens2DArray[col][row].visiable == true) {
                 ctx.drawImage(chickens2DArray[col][row].bgImage, chickens2DArray[col][row].x,
                     chickens2DArray[col][row].y, chickenImage.width, chickenImage.height)
             }
@@ -297,9 +343,24 @@ function drawChickens() {
 }
 
 
-function drawBullet() {
+function drawBullets() {
 
-    ctx.drawImage(bulletImage, bullet.x, bullet.y, bulletImage.width, bulletImage.height)
+    for (let i = 0; i < bulletArray.length; i++) {
+        if (bulletArray[i].visiable == true) {
+            ctx.drawImage(bulletImage, bulletArray[i].x, bulletArray[i].y, bulletImage.width, bulletImage.height)
+        }
+
+    }
+
+}
+
+
+function drawEggs() {
+
+    for (let i = 0; i < eggArray.length; i++) {
+        ctx.drawImage(eggImage, eggArray[i].x, eggArray[i].y, eggImage.width, eggImage.height)
+    }
+
 }
 
 // function drawChickensDefault() {
@@ -315,6 +376,23 @@ function drawBullet() {
 //         }
 //     }
 // }
+
+
+
+function createNewEgg() {
+
+    // Pick Random Chicken to shot
+    var colRandom = Math.floor(Math.random() * 5);
+    var rowRandom = Math.floor(Math.random() * 6);
+
+    var chosenChicken = chickens2DArray[colRandom][rowRandom]
+
+    var newEgg = new Object()
+    newEgg.x = chosenChicken.x
+    newEgg.y = chosenChicken.y
+    eggArray.push(newEgg)
+}
+
 
 function clear() {
     ctx.fillStyle = '#d0e7f9';
