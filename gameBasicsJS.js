@@ -24,6 +24,7 @@ var startDrawChickensIndexY
 var egg
 var eggImage
 var eggArray
+var visiableChickens
 
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var gamePoints
@@ -78,6 +79,7 @@ function setupGamePlay() {
 
     bulletArray = []
     eggArray = []
+    visiableChickens = []
 
     keysDown = {}
 
@@ -89,6 +91,7 @@ function setupGamePlay() {
         for (let row = 0; row < chickens2DArray[col].length; row++) {
             chickens2DArray[col][row] = new Object() // Objects for chickens
             chickens2DArray[col][row].bgImage = new Image()
+            visiableChickens.push(chickens2DArray[col][row])
         }
     }
 
@@ -161,6 +164,10 @@ function setDefaultChickens() {
 // Blank the chicken who got shot
 function hideChicken(chicken) {
     chicken.visiable = false
+    let index = visiableChickens.indexOf(chicken)
+    if (index !== -1) {
+        visiableChickens.splice(index, 1);
+    }
 }
 
 // Update game objects - change player position based on key pressed
@@ -382,15 +389,15 @@ function drawEggs() {
 function createNewEgg() {
 
     // Pick Random Chicken to shot
-    var colRandom = Math.floor(Math.random() * 5);
-    var rowRandom = Math.floor(Math.random() * 6);
+    var index = Math.floor(Math.random() * visiableChickens.length);
 
-    var chosenChicken = chickens2DArray[colRandom][rowRandom]
 
+    var chosenVisiableChicken = visiableChickens[index]
     var newEgg = new Object()
-    newEgg.x = chosenChicken.x
-    newEgg.y = chosenChicken.y
+    newEgg.x = chosenVisiableChicken.x
+    newEgg.y = chosenVisiableChicken.y
     eggArray.push(newEgg)
+
 }
 
 
