@@ -26,6 +26,7 @@ var eggImage
 var eggArray
 var visiableChickens
 var psilot
+var eggPrior
 
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var gamePoints
@@ -36,6 +37,7 @@ var then
 var keysDown
 var keyUp
 var prior
+var userTimeMinutes
 
 window.addEventListener("load", setupGamePlay, false);
 
@@ -49,7 +51,7 @@ function setupGamePlay() {
     canvasHeight = canvas.height
 
     // start a new game
-    document.getElementById("startButton").addEventListener("click", newGame, false)
+    document.getElementById("start-btn").addEventListener("click", newGame, false)
 
 
     bgImage = new Image()
@@ -192,7 +194,12 @@ function updatePositions(modifier) {
     }
     if (68 in keysDown) { // Player holding d for shoot
 
-        if (bulletArray.length == 0) {
+        let newbullet = new Object()
+            newbullet.visiable = true
+            newbullet.x = spaceship.x
+            newbullet.y = spaceship.y
+            bulletArray.push(newbullet)
+        /* if (bulletArray.length == 0) {
             let newbullet = new Object()
             newbullet.visiable = true
             newbullet.x = spaceship.x
@@ -205,7 +212,7 @@ function updatePositions(modifier) {
             newbullet.x = spaceship.x
             newbullet.y = spaceship.y
             bulletArray.push(newbullet)
-        }
+        } */
     }
 
     var chickenUpdate = TIME_INTERVAL / 15000.0 * chickenVelocity * prior;
@@ -217,7 +224,7 @@ function updatePositions(modifier) {
     }
 
     for (let j = 0; j < eggArray.length; j++) {
-        eggArray[j].y += egg.speed * modifier
+        eggArray[j].y += egg.speed * modifier * eggPrior
 
     }
 
@@ -235,12 +242,13 @@ function updatePositions(modifier) {
 
     collisionDetection()
 
+    // Check if user won
     if (visiableChickens.length == 0)
     {
-        alert("You Win " + gamePoints)
+
     }
 }
-// Check if bullet and chicken collider
+// Check if bullet and chicken collider and if need to end game
 function collisionDetection() {
     chickens2DArray.forEach(chickenArr => {
         chickenArr.forEach(chicken => {
@@ -274,7 +282,8 @@ function collisionDetection() {
         ) {
             // TODO - need to finish what happen when egg hits
             psilot -= 1
-
+            
+            // No more chances
             if (psilot > 0) {
                 reset()
             }
@@ -303,20 +312,22 @@ function newGame() {
 /*     startTimer(1, 0);
  */
     prior = 1
+    eggPrior = 1
 
     psilot = 3
 
-    chickenImage.width = 20
-    chickenImage.height = 20
+    chickenImage.width = canvasWidth * 0.04
+    chickenImage.height = canvasHeight * 0.04
 
-    spaceshipImage.width = 30
-    spaceshipImage.height = 30
+    spaceshipImage.width = canvasWidth * 0.04
+    spaceshipImage.height = canvasHeight * 0.04
 
-    bulletImage.width = 10
-    bulletImage.height = 10
+    bulletImage.width = canvasWidth * 0.03
+    bulletImage.height = canvasHeight * 0.03
 
-    eggImage.width = 15
-    eggImage.height = 15
+    eggImage.width = canvasWidth * 0.035
+    eggImage.height = canvasHeight * 0.035
+
 
     chickenVelocity = initialChickenVelocity
     startDrawChickensIndexX = defualtChickenCoordinateX
@@ -404,12 +415,8 @@ function drawEggs() {
 function updatePrior() {
     if (prior < 16) {
         prior++
+        eggPrior++
     }
-    clearInterval(intervalTimeEggs)
-
-    intervalTimeEggs = setInterval(createNewEgg, 2000 / prior)
-
-
 }
 
 
@@ -417,6 +424,7 @@ function createNewEgg() {
 
 
     // Pick Random Chicken to shot
+    if (bulletArray.length == 0){
     var index = Math.floor(Math.random() * visiableChickens.length);
 
 
@@ -425,6 +433,18 @@ function createNewEgg() {
     newEgg.x = chosenVisiableChicken.x
     newEgg.y = chosenVisiableChicken.y
     eggArray.push(newEgg)
+    }
+
+    else if (eggArray.length < 2 && eggArray[eggArray.length - 1].y < canvasHeight * 0.75){
+    var index = Math.floor(Math.random() * visiableChickens.length);
+
+
+    var chosenVisiableChicken = visiableChickens[index]
+    var newEgg = new Object()
+    newEgg.x = chosenVisiableChicken.x
+    newEgg.y = chosenVisiableChicken.y
+    eggArray.push(newEgg)
+    }
 
 }
 
@@ -447,7 +467,7 @@ function clear() {
     //color selected before  
 };
 
-/* 
+
 function startTimer(minutes, seconds) {
     let totalTime = (minutes * 60) + seconds; // Convert minutes and seconds to total seconds
     let timer = setInterval(() => {
@@ -459,5 +479,6 @@ function startTimer(minutes, seconds) {
             clearInterval(timer);
             console.log('Timer finished!');
         }
-    }, 1000); // Run the timer every 1 second */
+    }, 1000); // Run the timer every 1 second
+}
 
