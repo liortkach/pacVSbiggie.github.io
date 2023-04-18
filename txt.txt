@@ -24,7 +24,6 @@ var startDrawChickensIndexY
 var egg
 var eggImage
 var eggArray
-var visiableChickens
 
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var gamePoints
@@ -34,7 +33,7 @@ var delta
 var then
 var keysDown
 var keyUp
-var prior
+
 
 window.addEventListener("load", setupGamePlay, false);
 
@@ -76,11 +75,9 @@ function setupGamePlay() {
     chickens2DArray = new Array(5)
     bullet = { speed: 256 }
     egg = { speed: 128 }
-    prior = 1
 
     bulletArray = []
     eggArray = []
-    visiableChickens = []
 
     keysDown = {}
 
@@ -92,7 +89,6 @@ function setupGamePlay() {
         for (let row = 0; row < chickens2DArray[col].length; row++) {
             chickens2DArray[col][row] = new Object() // Objects for chickens
             chickens2DArray[col][row].bgImage = new Image()
-            visiableChickens.push(chickens2DArray[col][row])
         }
     }
 
@@ -165,10 +161,6 @@ function setDefaultChickens() {
 // Blank the chicken who got shot
 function hideChicken(chicken) {
     chicken.visiable = false
-    let index = visiableChickens.indexOf(chicken)
-    if (index !== -1) {
-        visiableChickens.splice(index, 1);
-    }
 }
 
 // Update game objects - change player position based on key pressed
@@ -205,7 +197,7 @@ function updatePositions(modifier) {
         }
     }
 
-    var chickenUpdate = TIME_INTERVAL / 15000.0 * chickenVelocity * prior;
+    var chickenUpdate = TIME_INTERVAL / 15000.0 * chickenVelocity;
     startDrawChickensIndexX += chickenUpdate;
 
     for (let j = 0; j < bulletArray.length; j++) {
@@ -278,8 +270,6 @@ function stopTimer() {
 function newGame() {
     reset();
 
-    prior = 1
-
     chickenImage.width = 20
     chickenImage.height = 20
 
@@ -299,7 +289,6 @@ function newGame() {
     then = Date.now();
     intervalTimerMain = setInterval(main, 1);
     intervalTimeEggs = setInterval(createNewEgg, 2000)
-    intervalTimerPrior = setInterval(updatePrior, 7500)
 
 
     for (let col = 0; col < chickens2DArray.length; col++) {
@@ -374,32 +363,34 @@ function drawEggs() {
 
 }
 
+// function drawChickensDefault() {
 
-function updatePrior() {
-    if (prior < 16) {
-        prior = prior * 2
-    }
-    clearInterval(intervalTimeEggs)
+//     chickenImage.width = 20
+//     chickenImage.height = 20
 
-    intervalTimeEggs = setInterval(createNewEgg, 2000 / prior)
-    
-
-}
+//     for (let col = 0; col < chickens2DArray.length; col++) {
+//         for (let row = 0; row < chickens2DArray[col].length; row++) {
+//             // Draw Chickens in defualt 5X4
+//             ctx.drawImage(chickenImage, defualtChickenCoordinateX + col * (chickenImage.width + padding),
+//                 defualtChickenCoordinateY + row * (chickenImage.height + padding), chickenImage.width, chickenImage.height)
+//         }
+//     }
+// }
 
 
 
 function createNewEgg() {
 
     // Pick Random Chicken to shot
-    var index = Math.floor(Math.random() * visiableChickens.length);
+    var colRandom = Math.floor(Math.random() * 5);
+    var rowRandom = Math.floor(Math.random() * 6);
 
+    var chosenChicken = chickens2DArray[colRandom][rowRandom]
 
-    var chosenVisiableChicken = visiableChickens[index]
     var newEgg = new Object()
-    newEgg.x = chosenVisiableChicken.x
-    newEgg.y = chosenVisiableChicken.y
+    newEgg.x = chosenChicken.x
+    newEgg.y = chosenChicken.y
     eggArray.push(newEgg)
-
 }
 
 
