@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Chicken Invaders</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 <!-- Home Screen -->
 	<audio id="bgmusic-home" src="audio/space-wave-144298.mp3" autoplay loop></audio>
@@ -135,14 +136,12 @@
 						<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2" onchange="updateTimeValue(this.value)">
 						<p id="rangeValue">2</p>
 					</div>
-					<button id="start-btn" type="submit">Start Game</button>
-
-				<button type="submit">Start Game</button>
-
+					<button id="startbutton" type="submit">Start Game</button>
+				</div>
 			</form>
 		</div>
     	<div class="screen" id="game">
-			<canvas id="gameCanvas"></canvas>
+			<canvas id="gameCanvas" width="600" height="400" style="border:1px solid #d3d3d3;">
 			<button type="submit">Play again</button>
 
      	</div>
