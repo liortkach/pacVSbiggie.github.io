@@ -54,7 +54,6 @@ function setupGamePlay() {
     bgImage = new Image()
     bgImage.src = "images/world.jpg"
 
-
     spaceshipImage = new Image()
     spaceshipImage.src = "images/spaceship.jpg"
 
