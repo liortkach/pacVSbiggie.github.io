@@ -1,5 +1,5 @@
 body {
-    background-image: url(images/meteorShower.png);
+    background-image: url(images/nyc.png);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center center;
@@ -13,11 +13,19 @@ body {
     margin-top: 5%;
 }
 .logo {
-    display: block;
     margin-left: auto;
     margin-right: auto;
     padding: 5%;
-    background-image: url("images/aalogo.png");
+    background-image: url("images/t_b_logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.title {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5%;
+    background-image: url("images/king.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
