@@ -136,6 +136,17 @@
 						<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2" onchange="updateTimeValue(this.value)">
 						<p id="rangeValue">2</p>
 					</div>
+					<div class="config-container">
+						<h2>Select a character:</h2>
+						<div class="character" onclick="selectCharacter('spongebob')">
+							<img src="images/BiggieIcon.png" alt="SpongeBob SquarePants" width="100" height="100">
+							<p>SpongeBob SquarePants</p>
+						</div>
+						<div class="character" onclick="selectCharacter('patrick')">
+							<img src="images/tupacIcon.png" alt="Patrick Star" width="100" height="100">
+							<p>Patrick Star</p>
+						</div>
+					</div>
 					<button id="start-btn" type="submit">Start Game</button>
 					
 				</div>
