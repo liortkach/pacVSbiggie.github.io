@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Chicken Invaders</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
-<!-- Home Screen -->
+	<!-- Home Screen -->
 	<audio id="bgmusic-home" src="audio/space-wave-144298.mp3" autoplay loop></audio>
 
-<!-- game Screen -->
+	<!-- game Screen -->
 	<audio id="bgmusic-game" src="audio/password-infinity-123276.mp3" autoplay loop></audio>
 
 </head>
+
 <body>
 	<header>
 		<div class="logo">
-	
+
 		</div>
 		<div class="title">
 		</div>
@@ -24,23 +26,23 @@
 			<span class="close-btn">&times;</span>
 			<strong>Success!</strong>
 			<span class="alert-message"></span>
-		  </div>
-		  
-		  <div class="alert" id="warning-alert">
+		</div>
+
+		<div class="alert" id="warning-alert">
 			<span class="close-btn">&times;</span>
 			<strong>Error!</strong>
 			<span class="alert-message"></span>
-		  </div>		  
+		</div>
 	</header>
 
 	<nav class="menu">
 		<ul>
-			<li class="home-btn" onclick="switchScreen(this.className)"     >Home</li>
-			<li class="login-btn" onclick="switchScreen(this.className)"    >Log-in</li>
-			<li class="register-btn" onclick="switchScreen(this.className)" >Register</li>
-            <li class="about-btn" onclick="switchScreen(this.className)"    > About</li>
-            <li class="config-btn" onclick="switchScreen(this.className)"   >Game Setting</li>
-            <li class="game-btn" onclick="switchScreen(this.className)"     > Play Game</li>
+			<li class="home-btn" onclick="switchScreen(this.className)">Home</li>
+			<li class="login-btn" onclick="switchScreen(this.className)">Log-in</li>
+			<li class="register-btn" onclick="switchScreen(this.className)">Register</li>
+			<li class="about-btn" onclick="switchScreen(this.className)"> About</li>
+			<li class="config-btn" onclick="switchScreen(this.className)">Game Setting</li>
+			<li class="game-btn" onclick="switchScreen(this.className)"> Play Game</li>
 
 		</ul>
 	</nav>
@@ -54,14 +56,16 @@
 	<div class="content">
 		<div class="screen" id="home">
 			<h1>Welcome to Chicken Invaders</h1>
-			<p>We are a team of avengers fighting against the chicken invasion. Join us and help us save the world from the poultry threat!</p>
+			<p>We are a team of avengers fighting against the chicken invasion. Join us and help us save the world from
+				the poultry threat!</p>
 			<p>Developed by: Lior Tkach - 208892166, Denis Rize - 316476431. </p>
-			<p>Home Websites: Lior Tkach - <a href="">Svika Pick</a>, Denis Rize - <a href="https://web-development-environments-2023.github.io/316476431/">My grandmother</a></p>
+			<p>Home Websites: Lior Tkach - <a href="">Svika Pick</a>, Denis Rize - <a
+					href="https://web-development-environments-2023.github.io/316476431/">My grandmother</a></p>
 
-			<button type="submit" class="register-btn" onclick="switchScreen(this.className)"  >Register</button>
-			<button type="submit" class="login-btn"    onclick="switchScreen(this.className)"  >Log-in</button>
+			<button type="submit" class="register-btn" onclick="switchScreen(this.className)">Register</button>
+			<button type="submit" class="login-btn" onclick="switchScreen(this.className)">Log-in</button>
 		</div>
-        <div class="screen" id="register">
+		<div class="screen" id="register">
 
 			<form class="container" id="registerForm">
 				<div class="child-container">
@@ -97,10 +101,10 @@
 					<button class="big-btn" type="submit">Sign up</button>
 				</div>
 
-			
-			  </form>
-    	</div>
-		<div class="screen"  id="login">
+
+			</form>
+		</div>
+		<div class="screen" id="login">
 			<form class="container" id="loginForm">
 				<div class="child-container">
 					<h2>Login</h2>
@@ -110,15 +114,15 @@
 
 					<label for="loginUsername">Username:</label>
 					<input type="text" id="loginUsername" name="loginUsername" required>
-	
+
 					<label for="loginPassword">Password:</label>
 					<input type="password" id="loginPassword" name="loginPassword" required>
-	
+
 					<button class="big-btn" id="submitButton" type="submit">Sign in</button>
 				</div>
 			</form>
 		</div>
-		<div class="screen"  id="configuration">
+		<div class="screen" id="configuration">
 			<form class="container" id="configurationForm">
 
 				<div class="child-container">
@@ -134,27 +138,33 @@
 
 					<div class="config-container">
 						<label for="timeGame">Choose Time for game:</label>
-						<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2" onchange="updateTimeValue(this.value)">
+						<input type="range" id="timeGame" name="minutes" min="2" max="8" step="1" value="2"
+							onchange="updateTimeValue(this.value)">
 						<p id="rangeValue">2</p>
 					</div>
 					<button id="start-btn" type="submit">Start Game</button>
 				</div>
 			</form>
 		</div>
-    	<div class="screen" id="game">
+		<div class="screen" id="game">
+			<!--  -->
+			<div id="score"></div>
+			<div id="time"></div>
 			<canvas id="gameCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
-			<button type="startButton">Play again</button>
+			<button id="startButton" type="startButton">Play again</button>
 
-     	</div>
+		</div>
 	</div>
 
-    <script src="chicken.js"></script>
+	<script src="chicken.js"></script>
 	<script src="gameBasicsJS.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </body>
 <footer>
 	<p>Developed by Denis Rize and Lior Tkach</p>
 	<p>316476431_208821988</p>
 	<p>Web development course second assignment.</p>
 </footer>
+
 </html>

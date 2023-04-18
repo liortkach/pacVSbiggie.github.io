@@ -2,6 +2,8 @@ var canvas
 var ctx
 var canvasWidth
 var canvasHeight
+var pacGotShotMusic
+var biggieGotShotMusic
 
 var spaceship
 var spaceshipImage
@@ -27,6 +29,7 @@ var eggArray
 var visiableChickens
 var psilot
 var eggPrior
+var shooting
 
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var gamePoints
@@ -38,6 +41,12 @@ var keysDown
 var keyUp
 var prior
 var userTimeMinutes
+var choshenKey
+var totalTime
+var gamePaused
+var lastTimeShot
+var intervalId
+var timeLeft
 
 window.addEventListener("load", setupGamePlay, false);
 
@@ -47,15 +56,18 @@ function setupGamePlay() {
     canvas = document.getElementById("gameCanvas");
     ctx = canvas.getContext("2d");
 
+    ctx.imageSmoothingEnabled = true;
+
     canvasWidth = canvas.width
     canvasHeight = canvas.height
 
     // start a new game
     document.getElementById("start-btn").addEventListener("click", newGame, false)
+    document.getElementById("startButton").addEventListener("click", newGame, false)
 
 
     bgImage = new Image()
-    bgImage.src = "images/world.jpg"
+    bgImage.src = "images/background.jpg"
 
     spaceshipImage = new Image()
     spaceshipImage.src = "images/spaceship.jpg"
@@ -73,40 +85,20 @@ function setupGamePlay() {
     eggImage.src = "images/egg.jpg"
 
 
-    // Game Objects
-    spaceship = { speed: 256 }
-    chickens2DArray = new Array(5)
-    bullet = { speed: 256 }
-    egg = { speed: 128 }
-    prior = 1
-
-    bulletArray = []
-    eggArray = []
-    visiableChickens = []
-
-    keysDown = {}
-
-    for (let i = 0; i < chickens2DArray.length; i++) {
-        chickens2DArray[i] = new Array(4)
-    }
-
-    for (let col = 0; col < chickens2DArray.length; col++) {
-        for (let row = 0; row < chickens2DArray[col].length; row++) {
-            chickens2DArray[col][row] = new Object() // Objects for chickens
-            chickens2DArray[col][row].bgImage = new Image()
-            visiableChickens.push(chickens2DArray[col][row])
-        }
-    }
-
-    setDefaultChickens()
-
-    gamePoints = 0
+    pacGotShotMusic = new Audio('audio/pacGotShot.mp3')
+    biggieGotShotMusic = new Audio('audio/biggieGotShot.mp3')
 
 
     // Check for keys pressed where key represents the keycode captured
     document.addEventListener("keydown", function (e) { keysDown[e.keyCode] = true; }, false);
 
     document.addEventListener("keyup", function (e) { delete keysDown[e.keyCode]; }, false);
+
+    // add points to the score when the div is clicked
+    document.getElementById("score").addEventListener("click", function () {
+        score += 10;
+        updateScore();
+    });
 
 }
 
@@ -176,29 +168,16 @@ function hideChicken(chicken) {
     }
 }
 
-// Update game objects - change player position based on key pressed
 
-function updatePositions(modifier) {
 
-    if ((38 in keysDown && spaceship.y > canvasHeight * 0.6)) { // Player holding up
-        spaceship.y -= spaceship.speed * modifier;
-    }
-    if ((40 in keysDown && spaceship.y < canvasHeight * 0.9)) { // Player holding down
-        spaceship.y += spaceship.speed * modifier;
-    }
-    if (37 in keysDown && spaceship.x > padding) { // Player holding left
-        spaceship.x -= spaceship.speed * modifier;
-    }
-    if (39 in keysDown && spaceship.x + 25 < canvasWidth - padding) { // Player holding right
-        spaceship.x += spaceship.speed * modifier;
-    }
-    if (68 in keysDown) { // Player holding d for shoot
+function userShot() {
+    if (!gamePaused) {
 
         let newbullet = new Object()
-            newbullet.visiable = true
-            newbullet.x = spaceship.x
-            newbullet.y = spaceship.y
-            bulletArray.push(newbullet)
+        newbullet.visiable = true
+        newbullet.x = spaceship.x
+        newbullet.y = spaceship.y
+        bulletArray.push(newbullet)
         /* if (bulletArray.length == 0) {
             let newbullet = new Object()
             newbullet.visiable = true
@@ -214,7 +193,38 @@ function updatePositions(modifier) {
             bulletArray.push(newbullet)
         } */
     }
+}
 
+// Update game objects - change player position based on key pressed
+
+function updatePositions(modifier) {
+    if (!gamePaused) {
+        if ((38 in keysDown && spaceship.y > canvasHeight * 0.6)) { // Player holding up
+            spaceship.y -= spaceship.speed * modifier;
+        }
+        if ((40 in keysDown && spaceship.y < canvasHeight * 0.9)) { // Player holding down
+            spaceship.y += spaceship.speed * modifier;
+        }
+        if (37 in keysDown && spaceship.x > padding) { // Player holding left
+            spaceship.x -= spaceship.speed * modifier;
+        }
+        if (39 in keysDown && spaceship.x + 25 < canvasWidth - padding) { // Player holding right
+            spaceship.x += spaceship.speed * modifier;
+        }
+
+        // You Dont Have Machine Gun 
+        if (68 in keysDown && !shooting) { // Player holding d for shoot
+            userShot()
+
+            shooting = true;
+
+            // You DontHave Machine Gun (TOO EASY)
+            setTimeout(() => {
+                shooting = false;
+            }, 500);  // set a timeout to stop shooting after 0.5 seconds
+
+        }
+    }
     var chickenUpdate = TIME_INTERVAL / 15000.0 * chickenVelocity * prior;
     startDrawChickensIndexX += chickenUpdate;
 
@@ -242,12 +252,14 @@ function updatePositions(modifier) {
 
     collisionDetection()
 
+    updateScore()
+
     // Check if user won
-    if (visiableChickens.length == 0)
-    {
+    if (visiableChickens.length == 0) {
 
     }
 }
+
 // Check if bullet and chicken collider and if need to end game
 function collisionDetection() {
     chickens2DArray.forEach(chickenArr => {
@@ -261,7 +273,7 @@ function collisionDetection() {
                     && bullet.y <= (chicken.y + 16)
                     && chicken.y <= (bullet.y + 16)
                 ) {
-                    let index = chickens2DArray.indexOf(chickenArr)
+                    let index = chickenArr.indexOf(chicken)
                     gamePoints += (5 - index) * 5;
                     bullet.visiable = false
                     bulletArray.pop()
@@ -275,21 +287,47 @@ function collisionDetection() {
 
     eggArray.forEach(egg => {
         if (
-            egg.x <= (spaceship.x + 16)
-            && spaceship.x <= (egg.x + 16)
-            && egg.y <= (spaceship.y + 16)
-            && spaceship.y <= (egg.y + 16)
+            egg.x <= (spaceship.x + 8)
+            && spaceship.x <= (egg.x + 8)
+            && egg.y <= (spaceship.y + 8)
+            && spaceship.y <= (egg.y + 8)
         ) {
             // TODO - need to finish what happen when egg hits
             psilot -= 1
-            
-            // No more chances
-            if (psilot > 0) {
-                reset()
-            }
-            else {
-                gameOver()
-            }
+
+            pacGotShotMusic.play()
+
+            gamePaused = true
+
+            currentMusic = document.getElementById("bgmusic-game");
+            currentMusic.pause()
+
+            pacGotShotMusic.addEventListener('ended', function () {
+
+                // Set gamePaused to false when audio finishes playing
+                gamePaused = false;
+
+                currentMusic.play()
+
+                // No more chances
+                if (psilot > 0) {
+                    reset()
+                }
+                else {
+                    gameOver()
+                }
+
+                return
+            });
+
+
+            /*             // No more chances
+                        if (psilot > 0) {
+                            reset()
+                        }
+                        else {
+                            gameOver()
+                        } */
         }
     })
 }
@@ -308,9 +346,47 @@ function stopTimer() {
 
 
 function newGame() {
+
+    // Game Objects
+    spaceship = { speed: 256 }
+    chickens2DArray = new Array(5)
+    bullet = { speed: 256 }
+    egg = { speed: 128 }
+    prior = 1
+
+    bulletArray = []
+    eggArray = []
+    visiableChickens = []
+
+    keysDown = {}
+
+    gamePaused = false
+
+    shooting = false
+
+    gamePoints = 0
+
+    timeLeft = 60
+
+    updateScore(); // initial display of the score
+    updateTime(); // initial display of the time
+
+    for (let i = 0; i < chickens2DArray.length; i++) {
+        chickens2DArray[i] = new Array(4)
+    }
+
+    for (let col = 0; col < chickens2DArray.length; col++) {
+        for (let row = 0; row < chickens2DArray[col].length; row++) {
+            chickens2DArray[col][row] = new Object() // Objects for chickens
+            chickens2DArray[col][row].bgImage = new Image()
+            visiableChickens.push(chickens2DArray[col][row])
+        }
+    }
+
+    setDefaultChickens()
+
     reset();
-/*     startTimer(1, 0);
- */
+
     prior = 1
     eggPrior = 1
 
@@ -334,9 +410,10 @@ function newGame() {
     startDrawChickensIndexY = defualtChickenCoordinateY
 
     then = Date.now();
-    intervalTimerMain = setInterval(main, 1);
-    intervalTimeEggs = setInterval(createNewEgg, 2000)
-    intervalTimerPrior = setInterval(updatePrior, 7500)
+    intervalTimerMain = setInterval(main, 1); // main loop 
+    intervalTimeEggs = setInterval(createNewEgg, 2000) // create egg each custume time
+    intervalTimerPrior = setInterval(updatePrior, 6500) // update the speed of the chickens and creation of eggs
+    intervalId = setInterval(updateTime, 1000); // update the time every second
 
 
     for (let col = 0; col < chickens2DArray.length; col++) {
@@ -351,9 +428,10 @@ function main() {
     now = Date.now()
     delta = now - then
 
-    updatePositions(delta / 1000)
-    draw()
-
+    if (!gamePaused) {
+        updatePositions(delta / 1000)
+        draw()
+    }
     then = now
 }
 
@@ -413,39 +491,43 @@ function drawEggs() {
 
 
 function updatePrior() {
-    if (prior < 16) {
-        prior++
-        eggPrior++
+    if (!gamePaused) {
+        if (prior < 5) {
+            prior++
+            eggPrior++
+            clearInterval(intervalTimeEggs)
+            intervalTimeEggs = setInterval(createNewEgg, 2000 / eggPrior)
+        }
     }
 }
 
 
 function createNewEgg() {
 
+    if (!gamePaused) {
+        // Pick Random Chicken to shot
+        if (eggArray.length == 0) {
+            var index = Math.floor(Math.random() * visiableChickens.length);
 
-    // Pick Random Chicken to shot
-    if (bulletArray.length == 0){
-    var index = Math.floor(Math.random() * visiableChickens.length);
+
+            var chosenVisiableChicken = visiableChickens[index]
+            var newEgg = new Object()
+            newEgg.x = chosenVisiableChicken.x
+            newEgg.y = chosenVisiableChicken.y
+            eggArray.push(newEgg)
+        }
+
+        else if (eggArray.length < 2 && eggArray[eggArray.length - 1].y < canvasHeight * 0.75) {
+            var index = Math.floor(Math.random() * visiableChickens.length);
 
 
-    var chosenVisiableChicken = visiableChickens[index]
-    var newEgg = new Object()
-    newEgg.x = chosenVisiableChicken.x
-    newEgg.y = chosenVisiableChicken.y
-    eggArray.push(newEgg)
+            var chosenVisiableChicken = visiableChickens[index]
+            var newEgg = new Object()
+            newEgg.x = chosenVisiableChicken.x
+            newEgg.y = chosenVisiableChicken.y
+            eggArray.push(newEgg)
+        }
     }
-
-    else if (eggArray.length < 2 && eggArray[eggArray.length - 1].y < canvasHeight * 0.75){
-    var index = Math.floor(Math.random() * visiableChickens.length);
-
-
-    var chosenVisiableChicken = visiableChickens[index]
-    var newEgg = new Object()
-    newEgg.x = chosenVisiableChicken.x
-    newEgg.y = chosenVisiableChicken.y
-    eggArray.push(newEgg)
-    }
-
 }
 
 
@@ -467,18 +549,20 @@ function clear() {
     //color selected before  
 };
 
+// update the score
+function updateScore() {
+    document.getElementById("score").innerHTML = "Score: " + gamePoints;
+}
 
-function startTimer(minutes, seconds) {
-    let totalTime = (minutes * 60) + seconds; // Convert minutes and seconds to total seconds
-    let timer = setInterval(() => {
-        let minutesLeft = Math.floor(totalTime / 60);
-        let secondsLeft = totalTime % 60;
-        console.log(`${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`); // Display the time remaining
-        totalTime--;
-        if (totalTime < 0) {
-            clearInterval(timer);
-            console.log('Timer finished!');
+// update the time left and display it
+function updateTime() {
+    document.getElementById("time").innerHTML = "Time Left: " + timeLeft + " seconds";
+    if (!gamePaused) {
+        timeLeft--;
+        if (timeLeft < 0) {
+            clearInterval(intervalId); // stop the timer when time is up
+            document.getElementById("time").innerHTML = "Time's Up!";
         }
-    }, 1000); // Run the timer every 1 second
+    }
 }
 
