@@ -82,9 +82,7 @@ a {
 }
 .container {
     display: flex;
-
 }
-
 .child-container {
     margin: 5%;
 }
@@ -94,15 +92,44 @@ label,input {
 }
 input{
     width: 150%;
-    height: 5%;
+    height: 7%;
 }
 .config-container{
     gap: 2%;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .config-container input{
     margin-top: auto;
+    height: auto;
     width: 30%;
+}
+.character {
+    margin: 2%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+.character:hover {
+    transform: scale(1.2);
+}
+.character img {
+    display: block;
+    margin: 0 auto;
+}
+.character p {
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+}
+input[type="radio"] {
+    display: none;
+}
+.icon {
+    width: 50%;
+}
+#start-btn{
+
 }
 #rangeValue {
     margin-top: 1%;
@@ -110,7 +137,6 @@ input{
     
 }
 footer {
-
     text-align: center;
     font-size: 14px;
     color: white;
@@ -129,21 +155,22 @@ button {
     border-radius: 5%;
     border: none;
     color: #ffffff;
-    background-color: rgba(138, 85, 139, 0.8);
+    background-color: rgba(138, 85, 139,0.8);
     cursor: pointer;
 
-  }
-  .big-btn {
+}
+.big-btn {
     width: 150%;
-    height: 20%;
+    height: 25%;
+    background-color: rgba(138, 85, 139);
 
-  }
-  #start-btn{
+ }
+#start-btn{
     width: 100%;
-  }
-  button:hover{
+}
+button:hover{
     color: #000000;
-  } 
+} 
   
 #gameCanvas{
     width: 100%;

@@ -138,17 +138,23 @@
 						<p id="rangeValue">2</p>
 					</div>
 					<div class="config-container">
-						<h2>Select a character:</h2>
-						<div class="character" onclick="selectCharacter('spongebob')">
-							<img src="images/BiggieIcon.png" alt="SpongeBob SquarePants" width="100" height="100">
-							<p>SpongeBob SquarePants</p>
+						<label for="character">Select a character:</label>
+						<div class="character">
+							<input type="radio" name="character" value="tupac" id="tupac-radio" hidden>
+							<label for="tupac-radio">
+								<img class="icon" src="images/tupacIcon.png" alt="Tupac" >
+								<p>Tupac</p>
+							</label>
 						</div>
-						<div class="character" onclick="selectCharacter('patrick')">
-							<img src="images/tupacIcon.png" alt="Patrick Star" width="100" height="100">
-							<p>Patrick Star</p>
+						<div class="character">
+							<input type="radio" name="character" value="biggie" id="biggie-radio" hidden>
+							<label for="biggie-radio">
+								<img class="icon" src="images/BiggieIcon.png" alt="Biggie" >
+								<p>Biggie</p>
+							</label>
 						</div>
 					</div>
-					<button id="start-btn" type="submit">Start Game</button>
+					<button class="big-btn" id="start-btn" type="submit">Start Game</button>
 				</div>
 			</form>
 		</div>

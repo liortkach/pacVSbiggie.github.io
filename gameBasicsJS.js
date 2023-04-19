@@ -468,8 +468,8 @@ function clear() {
 };
 
 
-function startTimer(minutes, seconds) {
-    let totalTime = (minutes * 60) + seconds; // Convert minutes and seconds to total seconds
+function startTimer(minutes) {
+    let totalTime = (minutes * 60) ; // Convert minutes and seconds to total seconds
     let timer = setInterval(() => {
         let minutesLeft = Math.floor(totalTime / 60);
         let secondsLeft = totalTime % 60;
