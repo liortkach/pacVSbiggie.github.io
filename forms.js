@@ -46,7 +46,7 @@ function checkPreferences(event){
         spaceshipImage.src = "images/tupacIcon.png";
         chickenImage.src = "images/biggieIcon.png";
         gameMusic = tupacPlaying;
-        lostMusic = biggieGotShotMusic;
+        lostMusic = pacGotShotMusic;
     } 
     else 
     {
@@ -54,7 +54,7 @@ function checkPreferences(event){
         spaceshipImage.src = "images/biggieIcon.png";
         chickenImage.src = "images/tupacIcon.png";
         gameMusic = biggiePlaying;
-        lostMusic = pacGotShotMusic;
+        lostMusic = biggieGotShotMusic;
     }
 
     if(chosenKey == "|s|"){
