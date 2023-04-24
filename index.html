@@ -2,25 +2,40 @@
 <html>
 
 <head>
-	<title>Chicken Invaders</title>
+	<title>King of New York</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<!-- Home Screen -->
-	<audio id="bgmusic-home" src="audio/space-wave-144298.mp3" autoplay loop></audio>
+<!-- 
+	<audio id="music-home" src="audio/space-wave-144298.mp3" autoplay loop></audio>
 
-	<!-- game Screen -->
-	<audio id="bgmusic-game" src="audio/password-infinity-123276.mp3" autoplay loop></audio>
+	<audio id="music-game" src="audio/password-infinity-123276.mp3" autoplay loop></audio>
+ -->
+
 
 </head>
 
 <body>
+	<div id="main-container">
 	<header>
-		<div class="logo">
 
+		<div class="logo div-background">
 		</div>
-		<div class="title">
+
+		<div class="title div-background">
 		</div>
-		<button id="mute-btn"></button>
+
+		<button class="div-background" id="mute-btn"></button>
+
+		<nav class="menu">
+			<ul>
+				<li class="home-btn" onclick="switchScreen(this.className)">Home</li>
+				<li class="login-btn" onclick="switchScreen(this.className)">Log-in</li>
+				<li class="register-btn" onclick="switchScreen(this.className)">Register</li>
+				<li id="about-btn"> About</li>
+				<li class="game-btn" onclick="switchScreen('config')"> Play Game</li>
+	
+			</ul>
+		</nav>
 
 		<div class="alert" id="success-alert">
 			<span class="close-btn">&times;</span>
@@ -33,31 +48,39 @@
 			<strong>Error!</strong>
 			<span class="alert-message"></span>
 		</div>
+
 	</header>
 
-	<nav class="menu">
-		<ul>
-			<li class="home-btn" onclick="switchScreen(this.className)">Home</li>
-			<li class="login-btn" onclick="switchScreen(this.className)">Log-in</li>
-			<li class="register-btn" onclick="switchScreen(this.className)">Register</li>
-			<li class="about-btn" onclick="switchScreen(this.className)"> About</li>
-			<li class="config-btn" onclick="switchScreen(this.className)">Game Setting</li>
-			<li class="game-btn" onclick="switchScreen(this.className)"> Play Game</li>
+	<div class="modal-dialog" id="game-dialog">
+		
+		<h2 id="game-dialog-title">Title</h2>
+		<h3 id="game-dialog-description">description</h2>
 
-		</ul>
-	</nav>
-	<dialog class="modal-box" id="about">
-		<h2>Modal Title</h2>
-		<h1>About Chicken Invaders</h1>
-		<p> Again presented by Denis Rize and Lior Tkach.</p>
-		<button id="close-modal"> Close </button>
+		<p id="game-dialog-message">Message</p>
+
+		<div class="buttons-wrapper">
+			<button  id="show-scoreboard">Show Scoreboard</button>
+			<button class="play-again-btn">Play Again</button>
+		</div>
+
+	</div>
+	
+	<dialog class="modal-dialog"  id="about-dialog">
+		<h1>About the game</h1>
+		<h3> This game presented to you by Denis Rize and Lior Tkach.</h3>
+		<p> The most challenging part of this assignment was to style the game and screens because css is the worst and we hope that we never have to use it again. <span>&#x1F4A9;</span></p>
+		<p> This Game is quite simple and the user's purpose is to choose who he thinks is the Real King and fight to prove it.<span class="crown-icon">&#x1F451;</span></p>
+
+		<button id="close-modal">Close</button>
+		
 	</dialog>
+
 
 	<div class="content">
 		<div class="screen" id="home">
-			<h1>Welcome to Chicken Invaders</h1>
-			<p>We are a team of avengers fighting against the chicken invasion. Join us and help us save the world from
-				the poultry threat!</p>
+			<h1>Welcome to The King of New York</h1>
+			<p>Who do you think is the King of New York,<span class="title-span"> Biggie </span>  or <span class="title-span">Tupac </span> ?? It's time to prove it, pick your king and show no mercy. </p>
+
 			<p>Developed by: Lior Tkach - 208892166, Denis Rize - 316476431. </p>
 			<p>Home Websites: Lior Tkach - <a href="">Svika Pick</a>, Denis Rize - <a
 					href="https://web-development-environments-2023.github.io/316476431/">My grandmother</a></p>
@@ -65,6 +88,7 @@
 			<button type="submit" class="register-btn" onclick="switchScreen(this.className)">Register</button>
 			<button type="submit" class="login-btn" onclick="switchScreen(this.className)">Log-in</button>
 		</div>
+
 		<div class="screen" id="register">
 
 			<form class="container" id="registerForm">
@@ -132,7 +156,7 @@
 				<div class="child-container">
 
 					<div class="config-container">
-						<label for="shootKey">Choose your favorite key to shoot:</label>
+						<label for="shootKey">Choose one key to shoot:</label>
 						<input type="text" id="shootKey" name="shootKey" required>
 					</div>
 
@@ -142,46 +166,82 @@
 							onchange="updateTimeValue(this.value)">
 						<p id="rangeValue">2</p>
 					</div>
+
+					<label for="character">Select a character:</label>
+
 					<div class="config-container">
-						<label for="character">Select a character:</label>
+
 						<div class="character">
-							<input type="radio" name="character" value="tupac" id="tupac-radio" hidden>
+							<input type="radio" name="character" value="tupac" id="tupac-radio" hidden >
 							<label for="tupac-radio">
 								<img class="icon" src="images/tupacIcon.png" alt="Tupac" >
 								<p>Tupac</p>
 							</label>
 						</div>
+
 						<div class="character">
-							<input type="radio" name="character" value="biggie" id="biggie-radio" hidden>
+							<input type="radio" name="character" value="biggie" id="biggie-radio" hidden >
 							<label for="biggie-radio">
-								<img class="icon" src="images/BiggieIcon.png" alt="Biggie" >
+								<img class="icon" src="images/biggieIcon.png" alt="Biggie" >
 								<p>Biggie</p>
 							</label>
 						</div>
+
 					</div>
 					<button class="big-btn" id="start-btn" type="submit">Start Game</button>
+
 				</div>
+
 			</form>
 		</div>
 		<div class="screen" id="game">
-			<!--  -->
-			<div id="score"></div>
-			<div id="time"></div>
+
+			<div class="info-wrapper">
+				<span class="crown-icon">&#x1F451;</span>
+				<div id="score">Score: <span class="value"></span></div>
+				<div id="time">Time Left: <span class="value"></span></div>
+			</div>
 			<canvas id="gameCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
-			<button id="startButton" type="startButton">Play again</button>
+			<button class="play-again-btn" id="canvas-play-again" type="button">Play again</button>
 
 		</div>
+
+		<div class="screen" id="score-board">
+			<div class="header-container">
+				<img src="images/left.png" alt="Gun pointing left" class="left">
+				<h2>Personal Scoring Board</h2>
+				<img src="images/right.png" alt="Gun pointing right" class="right">
+			  </div>
+			  	<div class="scrollable-container">
+				<table id="score-table">
+				<thead>
+					<tr>
+					<th id="score-rank">Rank</th>
+					<th id="score-king">King</th>
+					<th id="score-points">Points</th>
+					</tr>
+				</thead>
+				<tbody id="score-body">
+				</tbody>
+				</table>
+			</div>
+			<button class="play-again-btn" type="button">Play Again</button>
+		  </div>
 	</div>
 
-	<script src="chicken.js"></script>
+	<footer>
+		<p>Developed by Denis Rize and Lior Tkach</p>
+		<p>rize@post.bgu.ac.il , liortk@post.bgu.ac.il</p>
+		<p>Web development course second assignment.</p>
+	</footer>
+</div>
+	<script src="dialogs.js"></script>
+	<script src="screenControl.js"></script>
+	<script src="forms.js"></script>
+	<script src="music.js"></script>
+	<script src="setUp.js"></script>
 	<script src="gameBasicsJS.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </body>
-<footer>
-	<p>Developed by Denis Rize and Lior Tkach</p>
-	<p>316476431_208821988</p>
-	<p>Web development course second assignment.</p>
-</footer>
 
 </html>

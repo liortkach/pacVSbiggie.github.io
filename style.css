@@ -1,90 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Sancreek&family=Vina+Sans&display=swap'); 
 body {
+    min-width: 1341px; /* total of 1366 including divs */
+    min-height: 768px;
     background-image: url(images/nyc.png);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    height: 100%;
-    width: 100%;
+    font-family: 'Vina+Sans'; 
+    /* height: 100%;
+    width: 100%; */
 }
-.header {
-    text-align: center;
-    color: white;
-    margin-top: 5%;
+#main-container{
+    /* height: 100vh; */
+    display: flex;
+    flex-direction: column;
 }
+ 
 .logo {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5%;
+    padding: 5%; /* size of the logo img */
     background-image: url("images/t_b_logo.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    float: left;
+
+}
+#home{
+    background-color: rgba(130, 130, 130, 0.6);
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.title-span{
+    color: #6b0a0a;
+    font-weight: bold;
+    font-size: 150%;
+
 }
 .title {
     margin-left: auto;
     margin-right: auto;
     padding: 5%;
     background-image: url("images/king.png");
+
+    float: left;
+}
+.div-background {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 }
-
 #mute-btn {
     position: fixed;
     top: 0;
     right: 0;
     background-image: url('images/speaker-filled-audio-tool.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
     padding: 1% 2%;
 
   }
+ /* nav bar menu buttons */
 .menu {
-    position: absolute;
-    top: 2%;
-    left: 2%;
-    background-color: rgba(138, 85, 139, 0.8);
-    padding: 2%;
-    border-radius: 10px;
-    margin: 2%;
+    margin-top: 2%;
+    float: right;
+    width: 60%;
 }
 a {
     color: rgba(255, 255, 255);
     font-weight: bold;
-    text-decoration: none;
-
 }
-.menu ul {
+/* .menu ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
+} */
 .menu li {
-    margin-bottom: 20%;
-    color: rgb(0, 0, 0);
+    padding: 2%;
+    display: inline-block;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 150%;
     font-weight: bold;
     cursor: pointer;
 }
 .menu li:hover {
-    color: #ffffff;
+    color: #6b0a0a;
 }
 .content {
-    height: 100%;
-    margin-left: 20%;
+    /* position: relative; */
+    /* flex: 1; */
+    /* height: 100%; */
     padding: 2%;
     color: rgba(255, 255, 255);
-    font-size: 24px;
+    font-size: 150%;
+
 }
 .container {
     display: flex;
+    align-items: stretch;
+    text-align: left;
 }
+/* #loginForm {
+    flex-direction: column;
+    align-items: center;
+} */
+/* #loginForm .child-container{
+    margin: 1%;
+    padding: 0;
+} */
 .child-container {
-    margin: 5%;
+    padding: 5%;
+    margin-right: 5%;
 }
 label,input {
     display: block;
@@ -96,17 +116,20 @@ input{
 }
 .config-container{
     gap: 2%;
-    display: flex;
-    justify-content: center;
+    display: flex; 
     align-items: center;
 }
 .config-container input{
     margin-top: auto;
-    height: auto;
+    /* height: auto; */
     width: 30%;
+    /* margin-bottom: 0; */
+}
+.config-container label,input {
+    margin-bottom: 4%;
 }
 .character {
-    margin: 2%;
+    /* margin: 2%; */
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 }
@@ -119,34 +142,43 @@ input{
 }
 .character p {
     text-align: center;
-    margin: 0;
+    /* margin: 0; */
     font-weight: bold;
 }
 input[type="radio"] {
     display: none;
 }
-.icon {
-    width: 50%;
+.character input[type="radio"]:checked + label {
+    background-color: #6b0a0ab9;
+    border-color: #000;
 }
-#start-btn{
 
+.icon {
+    width: 40%;
 }
+#shootKey{
+    width: 5%;
+}
+
 #rangeValue {
     margin-top: 1%;
     margin-left: 2%;
-    
 }
 footer {
     text-align: center;
-    font-size: 14px;
+    /* position: absolute;
+    bottom: 0;
+    left:40%; */
+    font-size: 100%;
     color: white;
-    margin-top: 10%;
-    margin-bottom: 2%;
+    margin-top: 4%;
+    margin-bottom: 1%;
 }
 button {
     display: inline-block;
     padding: 1% 4%;
     font-size: 80%;
+    font-family: 'Vina+Sans'; 
     margin-top: 1%;
     margin-right: 2%;
     font-weight: bold;
@@ -155,28 +187,31 @@ button {
     border-radius: 5%;
     border: none;
     color: #ffffff;
-    background-color: rgba(138, 85, 139,0.8);
+    /* background-color: rgba(138, 85, 139,0.8); */
+    background-color: #6b0a0ab9;
     cursor: pointer;
 
 }
-.big-btn {
+.big-btn{
     width: 150%;
     height: 25%;
-    background-color: rgba(138, 85, 139);
+    font-size: 100%;
+    /* background-color: rgba(138, 85, 139); */
+    background-color: #6b0a0a;
 
  }
 #start-btn{
     width: 100%;
+    font-size: 150%;
 }
 button:hover{
     color: #000000;
 } 
-  
 #gameCanvas{
     width: 100%;
-    height: 100%;
-    border: 1px solid rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0);
+    height: 80vh;
+    /* border: 1px solid rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0); */
 
 }
 .alert {
@@ -185,9 +220,9 @@ button:hover{
     top: 20%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 20px;
+    padding: 2%;
     width: 20%;
-    margin-bottom: 15px;
+    margin-bottom: 2%;
     border-radius: 5px;
     display: none;
 }
@@ -203,12 +238,12 @@ button:hover{
   }
   
 .close-btn {
-    margin-left: 15px;
+    margin-left: 2%;
     color: white;
     font-weight: bold;
     float: right;
-    font-size: 22px;
-    line-height: 20px;
+    font-size: 120%;
+    line-height: 2%;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -218,7 +253,7 @@ button:hover{
 }
   
 .alert-message {
-    margin-left: 15px;
+    margin-left: 2%;
 }
 .screen {
   height: 100%;
@@ -226,18 +261,154 @@ button:hover{
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
+  text-align: center;
+
 }
+.buttons-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%; 
+    justify-content: center;
+}
+.buttons-wrapper button{
+    width: 100%;
+    height: 6vh;
+    background-color: #6b0a0a;
 
-
-#timer {
+}
+.modal-dialog {
     position: fixed;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    background-color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-    border: 1px solid #000;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    width: 30%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 0.8vh solid #6b0a0ab9;
+    border-radius: 2%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+}
+ #about-dialog{
+    height: auto;
+    font-size: 150% ;
+
+} 
+#game-dialog {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    font-size: 120%;
+}
+#game-dialog-title{
+    font-family: 'Nosifer', cursive; 
+    font-size: 180%;
+}
+#score-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(120, 58, 58, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 2%;
+    width: 50%;
+    height: 80%;
+    margin: 0 auto;
+    color: #000;
+}
+.scrollable-container {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 2%;
+  }
+table {
+    /* background-color: rgb(49, 175, 40); */
+
+    width: 100%;
+    border-collapse: collapse;
   }
 
+  th, td {
+    text-align: left;
+    padding: 2%;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  /* Style table rows */
+  /* tr:nth-child(even) {
+    background-color: #ab3a3a;
+  } */
+
+tr {
+    border-bottom: 0.5vh solid #6b0a0a;
+}
+.header-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2%;
+}
+.header-container h2{
+    border-bottom: 0.6vh solid black;
+    font-family: 'Nosifer', cursive; 
+    font-size: 100%;
+}
+.header-container img {
+    position: absolute;
+    height: 100%; /* Adjust the height to scale the gun images */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.header-container img.left {
+    left: 0;
+}
+
+.header-container img.right {
+    right: 0;
+}
+.info-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(174, 148, 0);
+    padding: 1%;
+    color: black;
+}
+#score, #time {
+    font-family: 'Sancreek', cursive;
+    /* font-size: 80%; */
+    font-weight: bold;
+    margin: 0 1%;
+    color: #000;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+ }
+.crown-icon {
+    /* font-size: 24px; */
+    margin-right: 1%;
+}
+.value {
+    font-family:auto;
+    display: inline-block;
+    background-color: white;
+    padding: 2px 5px;
+    border: 1px solid #979797;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    font-weight: bold;
+    margin-left: 5px;
+}
+  
 

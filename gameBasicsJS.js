@@ -2,8 +2,7 @@ var canvas
 var ctx
 var canvasWidth
 var canvasHeight
-var pacGotShotMusic
-var biggieGotShotMusic
+
 
 var spaceship
 var spaceshipImage
@@ -41,7 +40,7 @@ var keysDown
 var keyUp
 var prior
 var userTimeMinutes
-var choshenKey
+var shootKey
 var totalTime
 var gamePaused
 var lastTimeShot
@@ -61,32 +60,19 @@ function setupGamePlay() {
     canvasWidth = canvas.width
     canvasHeight = canvas.height
 
-    // start a new game
-    document.getElementById("start-btn").addEventListener("click", newGame, false)
-    document.getElementById("startButton").addEventListener("click", newGame, false)
-
-
     bgImage = new Image()
-    bgImage.src = "images/background.jpg"
+    bgImage.src = "images/game_bg.png"
 
     spaceshipImage = new Image()
-    spaceshipImage.src = "images/spaceship.jpg"
-
 
     chickenImage = new Image()
-    chickenImage.src = "images/logo.png"
 
 
     bulletImage = new Image()
     bulletImage.src = "images/fireshot.jpg"
 
-
     eggImage = new Image()
     eggImage.src = "images/egg.jpg"
-
-
-    pacGotShotMusic = new Audio('audio/pacGotShot.mp3')
-    biggieGotShotMusic = new Audio('audio/biggieGotShot.mp3')
 
 
     // Check for keys pressed where key represents the keycode captured
@@ -213,7 +199,7 @@ function updatePositions(modifier) {
         }
 
         // You Dont Have Machine Gun 
-        if (68 in keysDown && !shooting) { // Player holding d for shoot
+        if (shootKey in keysDown && !shooting) { // Player holding shoot key 
             userShot()
 
             shooting = true;
@@ -256,7 +242,7 @@ function updatePositions(modifier) {
 
     // Check if user won
     if (visiableChickens.length == 0) {
-
+        gameOver();
     }
 }
 
@@ -295,49 +281,54 @@ function collisionDetection() {
             // TODO - need to finish what happen when egg hits
             psilot -= 1
 
-            pacGotShotMusic.play()
+            switchMusic(lostMusic)
 
             gamePaused = true
 
-            currentMusic = document.getElementById("bgmusic-game");
-            currentMusic.pause()
-
-            pacGotShotMusic.addEventListener('ended', function () {
+            currentMusic.addEventListener('ended', function () {
 
                 // Set gamePaused to false when audio finishes playing
-                gamePaused = false;
-
-                currentMusic.play()
+                
 
                 // No more chances
                 if (psilot > 0) {
+                    gamePaused = false;
+                    switchMusic(gameMusic)
                     reset()
                 }
                 else {
+                    switchMusic(endOfGame)
                     gameOver()
                 }
 
                 return
             });
 
-
-            /*             // No more chances
-                        if (psilot > 0) {
-                            reset()
-                        }
-                        else {
-                            gameOver()
-                        } */
         }
     })
 }
 
 
 function gameOver() {
-    clear()
-    alert("Game over")
+    //clear()
+    gamePaused = true;
+    users[currentUser]["scores"].push(gamePoints);
+    // Game over because the player lost all lives
+    if(!psilot){
+        showDialog("lost", gamePoints);
+    } 
+     // Game over because the time is up, and the player scored 120 points
+    else if(!timeLeft){
+        showDialog("time", gamePoints);
+    }
+    // Game over because the player killed all bad spaceships
+    else{
+        showDialog("champion", gamePoints);
+    }
 
 }
+
+  
 
 
 function stopTimer() {
@@ -366,7 +357,6 @@ function newGame() {
 
     gamePoints = 0
 
-    timeLeft = 60
 
     updateScore(); // initial display of the score
     updateTime(); // initial display of the time
@@ -438,7 +428,7 @@ function main() {
 
 function draw() {
     clear()
-    ctx.drawImage(bgImage, 0, 0)
+    ctx.drawImage(bgImage, 0, 0, canvas.width , canvas.height )
     ctx.drawImage(spaceshipImage, spaceship.x, spaceship.y, spaceshipImage.width, spaceshipImage.height)
     drawChickens()
     drawBullets()
@@ -449,6 +439,7 @@ function draw() {
 function drawChickens() {
 
     // if the blocker hit the top or bottom, reverse direction
+
     if (startDrawChickensIndexX - padding < 0 || startDrawChickensIndexX + 5 * (chickenImage.width + padding) > canvasWidth)
         chickenVelocity *= -1;
 
@@ -549,20 +540,20 @@ function clear() {
     //color selected before  
 };
 
-// update the score
 function updateScore() {
-    document.getElementById("score").innerHTML = "Score: " + gamePoints;
-}
-
-// update the time left and display it
-function updateTime() {
-    document.getElementById("time").innerHTML = "Time Left: " + timeLeft + " seconds";
+    document.querySelector("#score .value").innerHTML = gamePoints;
+  }
+  
+  // update the time left and display it
+  function updateTime() {
     if (!gamePaused) {
-        timeLeft--;
-        if (timeLeft < 0) {
-            clearInterval(intervalId); // stop the timer when time is up
-            document.getElementById("time").innerHTML = "Time's Up!";
-        }
+      timeLeft--;
+      if (timeLeft < 0) {
+        clearInterval(intervalId); // stop the timer when time is up
+        document.getElementById("time").innerHTML = "Time's Up!";
+      } else {
+        document.querySelector("#time .value").innerHTML = timeLeft + " seconds";
+      }
     }
-}
-
+  }
+  
