@@ -1,52 +1,56 @@
-var canvas
-var ctx
-var canvasWidth
-var canvasHeight
+// Vars for canvas settings
+
+var canvas  // The canvas
+var ctx     // after 2d
+var canvasWidth     // For Canvas Width
+var canvasHeight    // For Canvas Height
 
 
-var spaceship
-var spaceshipImage
-var bgImage
-var chicken
-var chickenImage
-var chickens2DArray
-var defualtChickenCoordinateX
-var defualtChickenCoordinateY
-var bullet
-var bulletImage
-var bulletArray
-var chickenVelocity
-var initialChickenVelocity
-var widthMoveSize
-var heightMoveSize
-var padding
-var startDrawChickensIndexX
-var startDrawChickensIndexY
-var egg
-var eggImage
-var eggArray
-var visiableChickens
-var psilot
-var eggPrior
-var shooting
+// Vars for the game
+
+var spaceship   // Spaceship
+var spaceshipImage  // Spaceship Image
+var bgImage     // Canvas background
+var chicken     // The Bad Spaceship
+var chickenImage    // Image For Bad Spaceship
+var chickens2DArray     // 2D Array For The 5X4 Bad Spaceships
+var defualtChickenCoordinateX   // Default X to place the bad spaceships
+var defualtChickenCoordinateY   // Default y to place the bad spaceships
+var bullet      // The spaceship fire shot
+var bulletImage     // The image for spaceship fire shot
+var bulletArray     // Save all the bullets that are currentlly alive
+var chickenVelocity     // To change the movement of bad spaceships from lift to right after reaching the corner
+var initialChickenVelocity      // Start To go right
+var padding     // Padding for space between elements
+var startDrawChickensIndexX     // The current x to start drawing all alive bad spaceships
+var startDrawChickensIndexY     // The current y corner to start drawing all alive bad spaceships
+var egg     // Bad spaceship fire shot
+var eggImage    // Image for bad spaceship fire shot
+var eggArray    // All bad spaceships fire shots that are alive now
+var visiableChickens    // 1D array for only alive bad spaceships
+var psilot      // Number of lives left to the player
+var eggPrior    // Controls how fast the bad spaceship fire shot will move
+var shooting    // Controls that the spaceship will fire after little delay each time and not like machine gun
+
+
+
+// Vars for controling the game
 
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
-var gamePoints
-var now
-var intervalTimerMain
-var delta
-var then
-var keysDown
-var keyUp
-var prior
-var userTimeMinutes
-var shootKey
-var totalTime
-var gamePaused
-var lastTimeShot
-var intervalUpdateTime
-var timeLeft
-var intervalsActivated
+var gamePoints  // How many points the player achieved so far
+var now     // The time now
+var intervalTimerMain   // Interval of main function
+var delta   // The difference between last time checked and now
+var then    // The last time checked
+var keysDown    // Which key is pressed
+var keyUp       // Which key is up
+var prior       // Controls how fast the bad spaceships are moving
+var shootKey    // Which key the user chose to fire with
+var gamePaused  // If the game is paused 
+var intervalUpdateTime  // Interval for update time function
+var timeLeft       // How much time left
+var intervalsActivated      // To check if the intervals are setted in the first time
+
 
 window.addEventListener("load", setupGamePlay, false);
 
@@ -57,6 +61,9 @@ function setupGamePlay() {
     ctx = canvas.getContext("2d");
 
     ctx.imageSmoothingEnabled = true;
+
+    canvas.width = window.innerWidth * 0.6;
+    canvas.height = window.innerHeight * 0.8;
 
     canvasWidth = canvas.width
     canvasHeight = canvas.height
@@ -70,10 +77,10 @@ function setupGamePlay() {
 
 
     bulletImage = new Image()
-    bulletImage.src = "images/fireshot.jpg"
+    bulletImage.src = "images/fireshot.png"
 
     eggImage = new Image()
-    eggImage.src = "images/egg.jpg"
+    eggImage.src = "images/enemyFire.png"
 
     intervalsActivated = false
 
@@ -165,7 +172,7 @@ function userShot() {
         newbullet.visiable = true
         newbullet.x = spaceship.x
         newbullet.y = spaceship.y
-        bulletArray.push(newbullet)
+        bulletArray.unshift(newbullet)
         /* if (bulletArray.length == 0) {
             let newbullet = new Object()
             newbullet.visiable = true
@@ -275,12 +282,11 @@ function collisionDetection() {
 
     eggArray.forEach(egg => {
         if (
-            egg.x <= (spaceship.x + 8)
-            && spaceship.x <= (egg.x + 8)
-            && egg.y <= (spaceship.y + 8)
-            && spaceship.y <= (egg.y + 8)
+            egg.x <= (spaceship.x + 12)
+            && spaceship.x <= (egg.x + 12)
+            && egg.y <= (spaceship.y + 12)
+            && spaceship.y <= (egg.y + 12)
         ) {
-            // TODO - need to finish what happen when egg hits
             psilot -= 1
 
             switchMusic(lostMusic)
@@ -295,7 +301,8 @@ function collisionDetection() {
                 // No more chances
                 if (psilot > 0) {
 
-                    switchMusic(gameMusic)
+                    // TODO - Music needs to continue from where it stopped
+                    switchMusicAfterGotShot(gameMusic)
                     reset()
                     gamePaused = false;
                 }
@@ -376,7 +383,7 @@ function newGame() {
         for (let row = 0; row < chickens2DArray[col].length; row++) {
             chickens2DArray[col][row] = new Object() // Objects for chickens
             chickens2DArray[col][row].bgImage = new Image()
-            visiableChickens.push(chickens2DArray[col][row])
+            visiableChickens.unshift(chickens2DArray[col][row])
         }
     }
 
@@ -385,10 +392,10 @@ function newGame() {
     reset();
 
     chickenImage.width = canvasWidth * 0.04
-    chickenImage.height = canvasHeight * 0.04
+    chickenImage.height = canvasHeight * 0.04 * 1.5
 
     spaceshipImage.width = canvasWidth * 0.04
-    spaceshipImage.height = canvasHeight * 0.04
+    spaceshipImage.height = canvasHeight * 0.04 * 1.5
 
     bulletImage.width = canvasWidth * 0.03
     bulletImage.height = canvasHeight * 0.03
@@ -519,10 +526,10 @@ function createNewEgg() {
             var newEgg = new Object()
             newEgg.x = chosenVisiableChicken.x
             newEgg.y = chosenVisiableChicken.y
-            eggArray.push(newEgg)
+            eggArray.unshift(newEgg)
         }
 
-        else if (eggArray.length < 2 && eggArray[eggArray.length - 1].y < canvasHeight * 0.75) {
+        else if (eggArray[eggArray.length - 1].y < canvasHeight * 0.75) {
             var index = Math.floor(Math.random() * visiableChickens.length);
 
 
@@ -530,7 +537,7 @@ function createNewEgg() {
             var newEgg = new Object()
             newEgg.x = chosenVisiableChicken.x
             newEgg.y = chosenVisiableChicken.y
-            eggArray.push(newEgg)
+            eggArray.unshift(newEgg)
         }
     }
 }
