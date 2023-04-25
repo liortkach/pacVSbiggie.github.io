@@ -4,6 +4,7 @@ var canvas  // The canvas
 var ctx     // after 2d
 var canvasWidth     // For Canvas Width
 var canvasHeight    // For Canvas Height
+var screenRatio     // canvas width / canvas height
 
 
 // Vars for the game
@@ -62,7 +63,7 @@ function setupGamePlay() {
 
     ctx.imageSmoothingEnabled = true;
 
-    canvas.width = window.innerWidth * 0.6;
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight * 0.8;
 
     canvasWidth = canvas.width
@@ -398,17 +399,20 @@ function newGame() {
 
     reset();
 
-    chickenImage.width = canvasWidth * 0.05
-    chickenImage.height = canvasHeight * 0.05 * 1.5
 
-    spaceshipImage.width = canvasWidth * 0.05
-    spaceshipImage.height = canvasHeight * 0.05 * 1.5
+    screenRatio = canvasWidth / canvasHeight
 
-    bulletImage.width = canvasWidth * 0.04
-    bulletImage.height = canvasHeight * 0.04
+    chickenImage.width = canvasWidth * 0.025
+    chickenImage.height = canvasHeight * 0.025 * 1.5 * screenRatio
 
-    eggImage.width = canvasWidth * 0.04
-    eggImage.height = canvasHeight * 0.04
+    spaceshipImage.width = canvasWidth * 0.025
+    spaceshipImage.height = canvasHeight * 0.025 * 1.5 * screenRatio
+
+    bulletImage.width = canvasWidth * 0.02
+    bulletImage.height = canvasHeight * 0.02 * screenRatio
+
+    eggImage.width = canvasWidth * 0.02
+    eggImage.height = canvasHeight * 0.02 * screenRatio
 
 
     chickenVelocity = initialChickenVelocity
