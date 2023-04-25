@@ -1,28 +1,28 @@
 
 // validation of different input fields
-function validateDetails(inputValue, type="password") {
+function validateDetails(inputValue, type = "password") {
     let regex;
-    if(type == "name"){
+    if (type == "name") {
         regex = /\d/;
     }
-    else if( type == "email"){
+    else if (type == "email") {
         regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     }
-    else if( type == "keyboard"){
+    else if (type == "keyboard") {
         regex = /^[a-zA-Z\s]$/;
     }
     // password
-    else{
+    else {
         regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     }
     return regex.test(inputValue);
 }
-  
-  // check configuration setting
-function checkPreferences(event){
+
+// check configuration setting
+function checkPreferences(event) {
     event.preventDefault();
 
-    if(!isLoggedIn){
+    if (!isLoggedIn) {
         showWarningMessage("You must login first.");
         return;
     }
@@ -31,43 +31,60 @@ function checkPreferences(event){
     let biggieIcon = document.getElementById("biggie-radio");
 
     // check valid choise to shot
-    if(chosenKey != "|s|" && !validateDetails(chosenKey,"keyboard")){
+    if (chosenKey != "|s|" && !validateDetails(chosenKey, "keyboard")) {
         showWarningMessage("You can only choose one letter or the space key");
         return;
     }
 
-    if(!tupacIcon.checked && !biggieIcon.checked){
+    if (!tupacIcon.checked && !biggieIcon.checked) {
         showWarningMessage("You must pick a character.");
         return;
     }
     // check user character pick
-    if(tupacIcon.checked ){
+    if (tupacIcon.checked) {
         currentCharacter = "Tupac";
+
         spaceshipImage.src = "images/tupacIcon.png";
-        chickenImage.src = "images/biggieIcon.png";
+
+        chickenImage1.src = "images/biggieIcon.png";
+
+        chickenImage2.src = "Images/biggieIcon2.png"
+
+        chickenImage3.src = "Images/biggieIcon3.png"
+
+        chickenImage4.src = "Images/biggieIcon4.png"
+
         gameMusic = tupacPlaying;
         lostMusic = pacGotShotMusic;
-    } 
-    else 
-    {
+    }
+    else {
         currentCharacter = "Biggie";
+
         spaceshipImage.src = "images/biggieIcon.png";
-        chickenImage.src = "images/tupacIcon.png";
+
+        chickenImage1.src = "images/tupacIcon.png";
+
+        chickenImage2.src = "Images/tupacIcon2.png"
+
+        chickenImage3.src = "Images/tupacIcon3.png"
+
+        chickenImage4.src = "Images/tupacIcon4.png"
+
         gameMusic = biggiePlaying;
         lostMusic = biggieGotShotMusic;
     }
 
-    if(chosenKey == "|s|"){
+
+    if (chosenKey == "|s|") {
         shootKey = 32; // Key code for the spacebar
     }
-     else
-    {
+    else {
         shootKey = chosenKey.toUpperCase().charCodeAt(0) - 65 + 65; // Key code for the upper-case letter
     }
 
     timeLeft = document.getElementById("timeGame").value * 60;
     configureForm.reset();
-    
+
     switchScreen("game");
     switchMusic(gameMusic);
     newGame();
@@ -78,7 +95,7 @@ function checkPreferences(event){
 function updateTimeValue(value) {
     document.getElementById("rangeValue").innerHTML = value;
 }
-  
+
 function registerUser(event) {
     event.preventDefault();
 
@@ -92,60 +109,60 @@ function registerUser(event) {
     var currentDate = new Date();
 
     // check if username exist
-    if( username in users){
+    if (username in users) {
         showWarningMessage("username already exist, try different username.");
     }
     // check if password is valid ( at least 8 characters, 1 letter, 1 number )
-    else if( !validateDetails(user_password)){
+    else if (!validateDetails(user_password)) {
         showWarningMessage("Password is not valid! need to be at least 8 characters, 1 letter, 1 number");
     }
     // check if passwords validation match to password
-    else if(passwordValidation != user_password){
+    else if (passwordValidation != user_password) {
         showWarningMessage("Password validation doesn't match the password.");
     }
     // check if first or last name don't contain numbers
-    else if( validateDetails(firstName,"name") || validateDetails(lastName,"name")){
+    else if (validateDetails(firstName, "name") || validateDetails(lastName, "name")) {
         showWarningMessage("Your name can't contain numbers in it.");
     }
     // check if email address is valid
-    else if(!validateDetails(email,"email")){
+    else if (!validateDetails(email, "email")) {
         showWarningMessage("Email address is not valid.");
     }
     // check if birth day date is in the past
-    else if(birthDay > currentDate) { 
+    else if (birthDay > currentDate) {
         showWarningMessage("Your Birth Day cannot be in the future.");
     }
-        
+
     // valid form
-    else{
-        addNewUser(username,user_password);
+    else {
+        addNewUser(username, user_password);
         showSuccessMessage("Registration completed successfuly!");
         registerForm.reset();
         switchScreen("login");
     }
 }
 
-function addNewUser(userName,userPassword){
+function addNewUser(userName, userPassword) {
     users[userName] = {
         password: userPassword,
         scores: []
     };
 }
 
-function loginUser(event){
+function loginUser(event) {
     event.preventDefault();
     let username = document.getElementById("loginUsername").value;
     let user_password = document.getElementById("loginPassword").value;
 
     // check if password valid
-    if(!(username  in users)){
+    if (!(username in users)) {
         showWarningMessage("Username don't exist.");
     }
     // check password is correct
-    else if(users[username]["password"] != user_password){
+    else if (users[username]["password"] != user_password) {
         showWarningMessage("Password is not correct.");
     }
-    else{
+    else {
         currentUser = username;
         showSuccessMessage("you logged in successfuly!");
         loginForm.reset();

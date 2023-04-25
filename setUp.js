@@ -15,6 +15,7 @@ var pacGotShotMusic;
 var biggieGotShotMusic;
 var homeMusic;
 var tupacPlaying;
+
 var biggiePlaying;
 var endOfGame;
 var gameMusic;

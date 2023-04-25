@@ -13,7 +13,7 @@ var spaceship   // Spaceship
 var spaceshipImage  // Spaceship Image
 var bgImage     // Canvas background
 var chicken     // The Bad Spaceship
-var chickenImage    // Image For Bad Spaceship
+var chickenImage1    // Image For Bad Spaceship
 var chickens2DArray     // 2D Array For The 5X4 Bad Spaceships
 var defualtChickenCoordinateX   // Default X to place the bad spaceships
 var defualtChickenCoordinateY   // Default y to place the bad spaceships
@@ -32,8 +32,8 @@ var visiableChickens    // 1D array for only alive bad spaceships
 var psilot      // Number of lives left to the player
 var eggPrior    // Controls how fast the bad spaceship fire shot will move
 var shooting    // Controls that the spaceship will fire after little delay each time and not like machine gun
-
-
+var tupacImages     // 4 Images of tupac
+var biggieImages    // 4 Images of biggie
 
 // Vars for controling the game
 
@@ -63,7 +63,7 @@ function setupGamePlay() {
 
     ctx.imageSmoothingEnabled = true;
 
-    canvas.width = window.innerWidth;
+    canvas.width = window.innerWidth * 0.95;
     canvas.height = window.innerHeight * 0.8;
 
     canvasWidth = canvas.width
@@ -74,7 +74,10 @@ function setupGamePlay() {
 
     spaceshipImage = new Image()
 
-    chickenImage = new Image()
+    chickenImage1 = new Image()
+    chickenImage2 = new Image()
+    chickenImage3 = new Image()
+    chickenImage4 = new Image()
 
 
     bulletImage = new Image()
@@ -85,7 +88,10 @@ function setupGamePlay() {
 
     intervalsActivated = false
 
-}
+
+    chickensImages = [chickenImage1, chickenImage2, chickenImage3, chickenImage4]
+
+}   
 
 
 /* // set up interval timer to update game
@@ -129,8 +135,8 @@ function setDefaultChickens() {
 
             // Draw Chickens in defualt 5X4
 
-            chickens2DArray[col][row].x = defualtChickenCoordinateX + col * (chickenImage.width + padding)
-            chickens2DArray[col][row].y = defualtChickenCoordinateY + row * (chickenImage.height + padding)
+            chickens2DArray[col][row].x = defualtChickenCoordinateX + col * (chickenImage1.width + padding)
+            chickens2DArray[col][row].y = defualtChickenCoordinateY + row * (chickenImage1.height + padding)
             chickens2DArray[col][row].visiable = true
         }
     }
@@ -402,8 +408,17 @@ function newGame() {
 
     screenRatio = canvasWidth / canvasHeight
 
-    chickenImage.width = canvasWidth * 0.025
-    chickenImage.height = canvasHeight * 0.025 * 1.5 * screenRatio
+    chickenImage1.width = canvasWidth * 0.025
+    chickenImage1.height = canvasHeight * 0.025 * 1.5 * screenRatio
+
+    chickenImage2.width = canvasWidth * 0.025
+    chickenImage2.height = canvasHeight * 0.025 * 1.5 * screenRatio
+
+    chickenImage3.width = canvasWidth * 0.025
+    chickenImage3.height = canvasHeight * 0.025 * 1.5 * screenRatio
+
+    chickenImage4.width = canvasWidth * 0.025
+    chickenImage4.height = canvasHeight * 0.025 * 1.5 * screenRatio
 
     spaceshipImage.width = canvasWidth * 0.025
     spaceshipImage.height = canvasHeight * 0.025 * 1.5 * screenRatio
@@ -440,7 +455,7 @@ function newGame() {
 
     for (let col = 0; col < chickens2DArray.length; col++) {
         for (let row = 0; row < chickens2DArray[col].length; row++) {
-            chickens2DArray[col][row].bgImage = chickenImage
+            chickens2DArray[col][row].bgImage = chickenImage1
         }
     }
 }
@@ -472,7 +487,7 @@ function drawChickens() {
 
     // if the blocker hit the top or bottom, reverse direction
 
-    if (startDrawChickensIndexX - padding < 0 || startDrawChickensIndexX + 5 * (chickenImage.width + padding) > canvasWidth)
+    if (startDrawChickensIndexX - padding < 0 || startDrawChickensIndexX + 5 * (chickenImage1.width + padding) > canvasWidth)
         chickenVelocity *= -1;
 
     for (let col = 0; col < chickens2DArray.length; col++) {
@@ -480,12 +495,12 @@ function drawChickens() {
 
             // Draw Chickens in defualt 5X4
 
-            chickens2DArray[col][row].x = startDrawChickensIndexX + col * (chickenImage.width + padding)
-            chickens2DArray[col][row].y = startDrawChickensIndexY + row * (chickenImage.height + padding)
+            chickens2DArray[col][row].x = startDrawChickensIndexX + col * (chickenImage1.width + padding)
+            chickens2DArray[col][row].y = startDrawChickensIndexY + row * (chickenImage1.height + padding)
 
             if (chickens2DArray[col][row].visiable == true) {
-                ctx.drawImage(chickens2DArray[col][row].bgImage, chickens2DArray[col][row].x,
-                    chickens2DArray[col][row].y, chickenImage.width, chickenImage.height)
+                ctx.drawImage(chickensImages[row], chickens2DArray[col][row].x,
+                    chickens2DArray[col][row].y, chickenImage1.width, chickenImage1.height)
             }
         }
     }
