@@ -16,7 +16,7 @@
 
 <body>
 	<div id="main-container">
-	<header>
+	<header id="game-header">
 
 		<div class="logo div-background">
 		</div>
@@ -196,13 +196,17 @@
 		</div>
 		<div class="screen" id="game">
 
-			<div class="info-wrapper">
+			<div id="info-wrapper">
 				<span class="crown-icon">&#x1F451;</span>
 				<div id="score">Score: <span class="value"></span></div>
 				<div id="time">Time Left: <span class="value"></span></div>
 			</div>
-			<canvas id="gameCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
-			<button class="play-again-btn" id="canvas-play-again" type="button">Play again</button>
+			<div id="canvas-container">
+				<canvas id="gameCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+			</div>
+			<div id="button-container">
+				<button class="play-again-btn" id="canvas-play-again" type="button">Play again</button>
+			</div>
 
 		</div>
 
@@ -229,7 +233,7 @@
 		  </div>
 	</div>
 
-	<footer>
+	<footer id="game-footer">
 		<p>Developed by Denis Rize and Lior Tkach</p>
 		<p>rize@post.bgu.ac.il , liortk@post.bgu.ac.il</p>
 		<p>Web development course second assignment.</p>
