@@ -59,6 +59,25 @@ function toggleScreen(screen1,screen2) {
     if(screen1 == screen2){
         return;
     }
+
+    if(screen2 == gameScreen){
+        document.getElementById("game-footer").style.display = "none";
+        document.getElementById("game-header").style.display = "none";
+    }
+    if(screen1 == gameScreen ){
+        document.getElementById("game-footer").style.display = "block";
+        document.getElementById("game-header").style.display = "block";
+    }
+    
+    if (screen2 == configureScreen){
+        document.getElementById("game-footer").style.display = "none";
+    }
+
+    if ( screen1 == configureScreen && screen2 != gameScreen ){
+        document.getElementById("game-footer").style.display = "block";
+    }
+
+
     let displayType = screen2 == scoreScreen? "flex": "block";
 
     screen1.style.opacity = "0";
@@ -114,6 +133,7 @@ function switchScreen(className){
         case className.includes("score"):
             currentScreen = scoreScreen;
             break;
+
         default:
             currentScreen = gameScreen; 
             break;

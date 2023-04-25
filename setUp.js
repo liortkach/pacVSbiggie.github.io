@@ -74,10 +74,10 @@ function setupGame(){
     currentMusic.play();
 
     // for testing the game looks on different screen sizes.
-    // window.addEventListener('resize', function () {
-    //     console.log('Width:', window.innerWidth);
-    //     console.log('Height:', window.innerHeight); 
-    // });
+    window.addEventListener('resize', function () {
+        console.log('Width:', window.innerWidth);
+        console.log('Height:', window.innerHeight); 
+    });
     
 
     document.getElementById("about-btn").addEventListener("click", (event) => {
@@ -105,7 +105,6 @@ function setupGame(){
       });
 
     window.addEventListener("keydown", (event) => {
-        console.log("esc")
 
         if (event.keyCode === 27) {
             aboutDialog.style.display = "none";
