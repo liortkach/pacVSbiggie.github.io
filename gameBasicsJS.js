@@ -269,9 +269,18 @@ function collisionDetection() {
                     && chicken.y <= (bullet.y + 16)
                 ) {
                     let index = chickenArr.indexOf(chicken)
+
                     gamePoints += (5 - index) * 5;
+
                     bullet.visiable = false
                     bulletArray.pop()
+                    
+                    if (hitMusic.paused) {
+                        hitMusic.play();
+                      } else {
+                        hitMusic.currentTime = 0;
+                      }
+
                     hideChicken(chicken)
                     setTimeout(100)
                     return
