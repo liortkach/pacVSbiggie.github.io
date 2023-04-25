@@ -280,10 +280,10 @@ function collisionDetection() {
 
     eggArray.forEach(egg => {
         if (
-            egg.x <= (spaceship.x + 12)
-            && spaceship.x <= (egg.x + 12)
-            && egg.y <= (spaceship.y + 12)
-            && spaceship.y <= (egg.y + 12)
+            egg.x <= (spaceship.x + 16)
+            && spaceship.x <= (egg.x + 16)
+            && egg.y <= (spaceship.y + 16)
+            && spaceship.y <= (egg.y + 16)
         ) {
             psilot -= 1
 
