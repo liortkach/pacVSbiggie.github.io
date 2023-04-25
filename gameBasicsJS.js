@@ -84,18 +84,6 @@ function setupGamePlay() {
 
     intervalsActivated = false
 
-
-    // Check for keys pressed where key represents the keycode captured
-    document.addEventListener("keydown", function (e) { keysDown[e.keyCode] = true; }, false);
-
-    document.addEventListener("keyup", function (e) { delete keysDown[e.keyCode]; }, false);
-
-    // add points to the score when the div is clicked
-    document.getElementById("score").addEventListener("click", function () {
-        score += 10;
-        updateScore();
-    });
-
 }
 
 
@@ -274,12 +262,12 @@ function collisionDetection() {
 
                     bullet.visiable = false
                     bulletArray.pop()
-                    
+
                     if (hitMusic.paused) {
                         hitMusic.play();
-                      } else {
+                    } else {
                         hitMusic.currentTime = 0;
-                      }
+                    }
 
                     hideChicken(chicken)
                     setTimeout(100)
@@ -356,6 +344,17 @@ function stopTimer() {
 
 
 function newGame() {
+
+    // Check for keys pressed where key represents the keycode captured
+    document.addEventListener("keydown", function (e) { keysDown[e.keyCode] = true; }, false);
+
+    document.addEventListener("keyup", function (e) { delete keysDown[e.keyCode]; }, false);
+
+    // add points to the score when the div is clicked
+    document.getElementById("score").addEventListener("click", function () {
+        score += 10;
+        updateScore();
+    });
 
     // Game Objects
     spaceship = { speed: 256 }
