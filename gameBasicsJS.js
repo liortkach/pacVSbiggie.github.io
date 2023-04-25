@@ -408,11 +408,11 @@ function newGame() {
     spaceshipImage.width = canvasWidth * 0.025
     spaceshipImage.height = canvasHeight * 0.025 * 1.5 * screenRatio
 
-    bulletImage.width = canvasWidth * 0.02
-    bulletImage.height = canvasHeight * 0.02 * screenRatio
+    bulletImage.width = canvasWidth * 0.025
+    bulletImage.height = canvasHeight * 0.025 * screenRatio
 
-    eggImage.width = canvasWidth * 0.02
-    eggImage.height = canvasHeight * 0.02 * screenRatio
+    eggImage.width = canvasWidth * 0.025
+    eggImage.height = canvasHeight * 0.025 * screenRatio
 
 
     chickenVelocity = initialChickenVelocity
