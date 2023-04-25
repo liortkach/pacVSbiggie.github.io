@@ -391,17 +391,17 @@ function newGame() {
 
     reset();
 
-    chickenImage.width = canvasWidth * 0.04
-    chickenImage.height = canvasHeight * 0.04 * 1.5
+    chickenImage.width = canvasWidth * 0.05
+    chickenImage.height = canvasHeight * 0.05 * 1.5
 
-    spaceshipImage.width = canvasWidth * 0.04
-    spaceshipImage.height = canvasHeight * 0.04 * 1.5
+    spaceshipImage.width = canvasWidth * 0.05
+    spaceshipImage.height = canvasHeight * 0.05 * 1.5
 
-    bulletImage.width = canvasWidth * 0.03
-    bulletImage.height = canvasHeight * 0.03
+    bulletImage.width = canvasWidth * 0.04
+    bulletImage.height = canvasHeight * 0.04
 
-    eggImage.width = canvasWidth * 0.035
-    eggImage.height = canvasHeight * 0.035
+    eggImage.width = canvasWidth * 0.04
+    eggImage.height = canvasHeight * 0.04
 
 
     chickenVelocity = initialChickenVelocity
