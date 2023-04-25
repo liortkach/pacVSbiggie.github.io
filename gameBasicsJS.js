@@ -298,7 +298,6 @@ function collisionDetection() {
                 // No more chances
                 if (psilot > 0) {
 
-                    // TODO - Music needs to continue from where it stopped
                     switchMusicAfterGotShot(gameMusic)
                     reset()
                     gamePaused = false;
