@@ -29,7 +29,11 @@ function switchMusic(musicToPlay){
 
     currentMusic.pause();
     currentMusic = musicToPlay;
-    currentMusic.currentTime = 0;
+
+    if (!gamePaused)
+    {
+      currentMusic.currentTime = 0;
+    }
 
     if( !isMusicPlaying ){
         currentMusic.muted = true;

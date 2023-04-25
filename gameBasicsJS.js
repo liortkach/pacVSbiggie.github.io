@@ -44,8 +44,9 @@ var shootKey
 var totalTime
 var gamePaused
 var lastTimeShot
-var intervalId
+var intervalUpdateTime
 var timeLeft
+var intervalsActivated
 
 window.addEventListener("load", setupGamePlay, false);
 
@@ -73,6 +74,8 @@ function setupGamePlay() {
 
     eggImage = new Image()
     eggImage.src = "images/egg.jpg"
+
+    intervalsActivated = false
 
 
     // Check for keys pressed where key represents the keycode captured
@@ -106,7 +109,6 @@ function reset() {
     // Reset spaceship position
     spaceship.x = canvasWidth / 2.2
     spaceship.y = canvasHeight * 0.9
-    spaceship.speed = 256
 
     defualtChickenCoordinateX = (canvasWidth / 11) * 4
     defualtChickenCoordinateY = (canvasHeight / 13)
@@ -288,13 +290,14 @@ function collisionDetection() {
             currentMusic.addEventListener('ended', function () {
 
                 // Set gamePaused to false when audio finishes playing
-                
+
 
                 // No more chances
                 if (psilot > 0) {
-                    gamePaused = false;
+
                     switchMusic(gameMusic)
                     reset()
+                    gamePaused = false;
                 }
                 else {
                     switchMusic(endOfGame)
@@ -314,21 +317,21 @@ function gameOver() {
     gamePaused = true;
     users[currentUser]["scores"].push(gamePoints);
     // Game over because the player lost all lives
-    if(!psilot){
+    if (!psilot) {
         showDialog("lost", gamePoints);
-    } 
-     // Game over because the time is up, and the player scored 120 points
-    else if(!timeLeft){
+    }
+    // Game over because the time is up, and the player scored 120 points
+    else if (!timeLeft) {
         showDialog("time", gamePoints);
     }
     // Game over because the player killed all bad spaceships
-    else{
+    else {
         showDialog("champion", gamePoints);
     }
 
 }
 
-  
+
 
 
 function stopTimer() {
@@ -344,6 +347,7 @@ function newGame() {
     bullet = { speed: 256 }
     egg = { speed: 128 }
     prior = 1
+    eggPrior = 1
 
     bulletArray = []
     eggArray = []
@@ -356,6 +360,9 @@ function newGame() {
     shooting = false
 
     gamePoints = 0
+
+    psilot = 3
+
 
 
     updateScore(); // initial display of the score
@@ -377,11 +384,6 @@ function newGame() {
 
     reset();
 
-    prior = 1
-    eggPrior = 1
-
-    psilot = 3
-
     chickenImage.width = canvasWidth * 0.04
     chickenImage.height = canvasHeight * 0.04
 
@@ -400,10 +402,22 @@ function newGame() {
     startDrawChickensIndexY = defualtChickenCoordinateY
 
     then = Date.now();
+
+
+    if (intervalsActivated) {
+        clearInterval(intervalTimerMain)
+        clearInterval(intervalTimeEggs)
+        clearInterval(intervalTimerPrior)
+        clearInterval(intervalUpdateTime)
+    }
+
     intervalTimerMain = setInterval(main, 1); // main loop 
     intervalTimeEggs = setInterval(createNewEgg, 2000) // create egg each custume time
     intervalTimerPrior = setInterval(updatePrior, 6500) // update the speed of the chickens and creation of eggs
-    intervalId = setInterval(updateTime, 1000); // update the time every second
+    intervalUpdateTime = setInterval(updateTime, 1000); // update the time every second
+
+
+    intervalsActivated = true;
 
 
     for (let col = 0; col < chickens2DArray.length; col++) {
@@ -428,7 +442,7 @@ function main() {
 
 function draw() {
     clear()
-    ctx.drawImage(bgImage, 0, 0, canvas.width , canvas.height )
+    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height)
     ctx.drawImage(spaceshipImage, spaceship.x, spaceship.y, spaceshipImage.width, spaceshipImage.height)
     drawChickens()
     drawBullets()
@@ -542,18 +556,18 @@ function clear() {
 
 function updateScore() {
     document.querySelector("#score .value").innerHTML = gamePoints;
-  }
-  
-  // update the time left and display it
-  function updateTime() {
+}
+
+// update the time left and display it
+function updateTime() {
     if (!gamePaused) {
-      timeLeft--;
-      if (timeLeft < 0) {
-        clearInterval(intervalId); // stop the timer when time is up
-        document.getElementById("time").innerHTML = "Time's Up!";
-      } else {
-        document.querySelector("#time .value").innerHTML = timeLeft + " seconds";
-      }
+        timeLeft--;
+        if (timeLeft < 0) {
+            clearInterval(intervalUpdateTime); // stop the timer when time is up
+            document.getElementById("time").innerHTML = "Time's Up!";
+        } else {
+            document.querySelector("#time .value").innerHTML = timeLeft + " seconds";
+        }
     }
-  }
-  
+}
+
