@@ -4,7 +4,7 @@ var canvas  // The canvas
 var ctx     // after 2d
 var canvasWidth     // For Canvas Width
 var canvasHeight    // For Canvas Height
-var screenRatio     // canvas width / canvas height
+var screenRatio     // Ratio between canvas width and height
 
 
 // Vars for the game
