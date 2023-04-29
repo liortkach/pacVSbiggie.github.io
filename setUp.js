@@ -15,6 +15,7 @@ var pacGotShotMusic;
 var biggieGotShotMusic;
 var homeMusic;
 var tupacPlaying;
+
 var biggiePlaying;
 var endOfGame;
 var gameMusic;
@@ -66,6 +67,7 @@ function setupGame(){
     tupacPlaying = new Audio("audio/tupacPlaying.mp3");
     biggiePlaying = new Audio("audio/biggiePlaying.mp3");
     endOfGame = new Audio("audio/gf.mp3");
+    hitMusic = new Audio("audio/hit.mp3")
 
     isMusicPlaying = true;
     isLoggedIn = false;
