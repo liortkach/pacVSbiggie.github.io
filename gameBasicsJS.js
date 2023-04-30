@@ -296,26 +296,10 @@ function collisionDetection() {
             switchMusic(lostMusic)
 
             gamePaused = true
+            
+            currentMusic.removeEventListener('ended', onMusicEnded);
+            currentMusic.addEventListener('ended', onMusicEnded);
 
-            currentMusic.addEventListener('ended', function () {
-
-                // Set gamePaused to false when audio finishes playing
-
-
-                // No more chances
-                if (psilot > 0) {
-
-                    switchMusicAfterGotShot(gameMusic)
-                    reset()
-                    gamePaused = false;
-                }
-                else {
-                    switchMusic(endOfGame)
-                    gameOver()
-                }
-
-                return
-            });
 
         }
     })
@@ -324,6 +308,7 @@ function collisionDetection() {
 
 function gameOver() {
     //clear()
+    switchMusic(endOfGame)
     gamePaused = true;
     users[currentUser]["scores"].push(gamePoints);
     // Game over because the player lost all lives

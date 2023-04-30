@@ -5,6 +5,10 @@ function showScoreBoard() {
     // Sort the scores in descending order
     const sortedScores = users[currentUser]["scores"].sort((a, b) => b - a);
   
+    // Clear the previous scores
+    const scoreBody = document.getElementById("score-body");
+    scoreBody.innerHTML = '';
+    
     // Create a list item for each score and add it to the list
     sortedScores.forEach((score, index) => {
       const rankItem = document.createElement("td");

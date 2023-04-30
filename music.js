@@ -23,14 +23,17 @@ function handleMuteMusic() {
 function triggerEndedEvent(audioElement) {
   const endedEvent = new Event('ended');
   audioElement.dispatchEvent(endedEvent);
+  audioElement.pause();
 }
 
-function switchMusic(musicToPlay) {
+function switchMusic(musicToPlay, startOver=true) {
 
   currentMusic.pause();
   currentMusic = musicToPlay;
 
-  currentMusic.currentTime = 0;
+  if(startOver){
+    currentMusic.currentTime = 0;
+  }
 
   if (!isMusicPlaying) {
     currentMusic.muted = true;
@@ -42,17 +45,14 @@ function switchMusic(musicToPlay) {
 
 }
 
-function switchMusicAfterGotShot(musicToPlay) {
-
-  currentMusic.pause();
-  currentMusic = musicToPlay;
-
-  if (!isMusicPlaying) {
-    currentMusic.muted = true;
-  } else {
-    currentMusic.muted = false;
+function onMusicEnded() {
+  // No more chances
+  if (psilot > 0) {
+      switchMusic(gameMusic, false);
+      reset()
+      gamePaused = false;
   }
-
-  currentMusic.play();
-
+  else {
+      gameOver()
+  }
 }
