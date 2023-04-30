@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Sancreek&family=Vina+Sans&display=swap'); 
 body {
     min-width: 1341px; /* total of 1366 including divs */
-    min-height: 768px;
+    min-height: 702px;
     background-image: url(images/nyc.png);
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -10,8 +10,6 @@ body {
     font-family: 'Vina+Sans'; 
     padding: 0;
     margin: 0;
-    /* height: 100%;
-    width: 100%; */
 }
 #main-container{
     /* height: 100vh; */
@@ -162,8 +160,8 @@ footer {
     text-align: center;
     font-size: 100%;
     color: white;
-    margin-top: 4%;
-    margin-bottom: 1%;
+    /* margin-top: 4%;
+    margin-bottom: 1%; */
 }
 button {
     display: inline-block;
@@ -209,6 +207,7 @@ button:hover{
     margin-bottom: 2%;
     border-radius: 5px;
     display: none;
+    z-index: 999;
 }
   
 .success {
@@ -375,7 +374,19 @@ tr {
 }
 #canvas-container{
     height: 80vh;
+    margin-bottom: 1.5%;
 }
+#gameCanvas{
+    width: 100%;
+}
+#canvas-play-again{
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    padding-left:  10%;
+    padding-right:  10%;
+
+}
+
 #score, #time {
     font-family: 'Sancreek', cursive;
     /* font-size: 80%; */

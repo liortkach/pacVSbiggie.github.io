@@ -296,7 +296,7 @@ function collisionDetection() {
             switchMusic(lostMusic)
 
             gamePaused = true
-            
+
             currentMusic.removeEventListener('ended', onMusicEnded);
             currentMusic.addEventListener('ended', onMusicEnded);
 
@@ -334,7 +334,7 @@ function stopTimer() {
 }
 
 
-function newGame() {
+function newGame(resetLife=false) {
 
     // Check for keys pressed where key represents the keycode captured
     document.addEventListener("keydown", function (e) { keysDown[e.keyCode] = true; }, false);
@@ -367,7 +367,10 @@ function newGame() {
 
     gamePoints = 0
 
-    psilot = 3
+    if(!resetLife){
+        console.log("second")
+        psilot = 3
+    }
 
 
 

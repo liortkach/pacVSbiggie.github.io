@@ -76,10 +76,10 @@ function setupGame(){
     currentMusic.play();
 
     // for testing the game looks on different screen sizes.
-    // window.addEventListener('resize', function () {
-    //     console.log('Width:', window.innerWidth);
-    //     console.log('Height:', window.innerHeight); 
-    // });
+    window.addEventListener('resize', function () {
+        console.log('Width:', window.innerWidth);
+        console.log('Height:', window.innerHeight); 
+    });
     
 
     document.getElementById("about-btn").addEventListener("click", (event) => {
@@ -146,21 +146,32 @@ function setupGame(){
     for (let i = 0; i < playButtons.length; i++){
             playButtons[i].addEventListener('click', () => {
             
+            // play again on the bottom of the canvas while lost music is playing
             if (currentMusic == lostMusic){
                 triggerEndedEvent(currentMusic);
                 return;
             }
 
+            if(playButtons[i].id == "canvas-play-again"){
+                console.log("first")
+                clear();
+                newGame(true);
+                return;
+            }
+
+            // play again on game Dialog 
             if(gameDialog.style.display != "none"){
                 gameDialog.style.display = "none";
                 switchScreen("config");
                 return;
 
             }
-            scoreScreen.style.display == "flex"? switchScreen("game"): null;
+
+            // play again on score board
+            scoreScreen.style.display == "flex"? switchScreen("config"): null;
             clear();
             newGame();
-            switchMusic(gameMusic);
+            // switchMusic(gameMusic);
 
         });
     };
