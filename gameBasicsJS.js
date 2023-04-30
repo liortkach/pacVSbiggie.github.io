@@ -350,6 +350,8 @@ function newGame(resetLife=false) {
         updateScore();
     });
 
+    switchMusic(currentMusic, true)
+    
     // Game Objects
     spaceship = { speed: 256 }
     chickens2DArray = new Array(5)
