@@ -20,6 +20,7 @@ var biggiePlaying;
 var endOfGame;
 var gameMusic;
 var lostMusic;
+var hitMusic
 
 var currentScreen;
 var currentMusic;

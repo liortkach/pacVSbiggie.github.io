@@ -34,7 +34,7 @@ var eggPrior    // Controls how fast the bad spaceship fire shot will move
 var shooting    // Controls that the spaceship will fire after little delay each time and not like machine gun
 var tupacImages     // 4 Images of tupac
 var biggieImages    // 4 Images of biggie
-
+var chickensImages
 // Vars for controling the game
 
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
