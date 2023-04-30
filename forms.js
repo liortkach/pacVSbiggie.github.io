@@ -64,11 +64,11 @@ function checkPreferences(event) {
 
         chickenImage1.src = "images/tupacIcon.png";
 
-        chickenImage2.src = "Images/tupacIcon2.png"
+        chickenImage2.src = "images/tupacIcon2.png"
 
-        chickenImage3.src = "Images/tupacIcon3.png"
+        chickenImage3.src = "images/tupacIcon3.png"
 
-        chickenImage4.src = "Images/tupacIcon4.png"
+        chickenImage4.src = "images/tupacIcon4.png"
 
         gameMusic = biggiePlaying;
         lostMusic = biggieGotShotMusic;
