@@ -297,9 +297,9 @@ function collisionDetection() {
 
             gamePaused = true
 
-            currentMusic.removeEventListener('ended', onMusicEnded);
-            currentMusic.addEventListener('ended', onMusicEnded);
-
+            currentMusic.removeEventListener('ended', onMusicEnded)
+            currentMusic.addEventListener('ended', onMusicEnded)
+            updateLives(psilot)
 
         }
     })
@@ -369,6 +369,7 @@ function newGame(resetLife=false) {
 
     if(!resetLife){
         psilot = 3
+        updateLives(psilot)
     }
 
 
@@ -590,4 +591,18 @@ function updateTime() {
         }
     }
 }
+
+// update remaining life of player
+function updateLives(livesRemaining) {
+    const livesElement = document.getElementById('lives');
+    livesElement.innerHTML = 'Lives: ';
+  
+    for (let i = 0; i < livesRemaining; i++) {
+      const crownSpan = document.createElement('span');
+      crownSpan.classList.add('crown-icon');
+      crownSpan.innerHTML = '&#x1F451;';
+      livesElement.appendChild(crownSpan);
+    }
+  }
+  
 

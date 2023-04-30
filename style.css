@@ -387,7 +387,7 @@ tr {
 
 }
 
-#score, #time {
+#score, #time, #lives {
     font-family: 'Sancreek', cursive;
     /* font-size: 80%; */
     font-weight: bold;
@@ -395,10 +395,9 @@ tr {
     color: #000;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
  }
-.crown-icon {
-    /* font-size: 24px; */
+/* .crown-icon {
     margin-right: 1%;
-}
+} */
 .value {
     font-family:auto;
     display: inline-block;
