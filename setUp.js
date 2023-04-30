@@ -76,10 +76,10 @@ function setupGame(){
     currentMusic.play();
 
     // for testing the game looks on different screen sizes.
-    window.addEventListener('resize', function () {
-        console.log('Width:', window.innerWidth);
-        console.log('Height:', window.innerHeight); 
-    });
+    // window.addEventListener('resize', function () {
+    //     console.log('Width:', window.innerWidth);
+    //     console.log('Height:', window.innerHeight); 
+    // });
     
 
     document.getElementById("about-btn").addEventListener("click", (event) => {
@@ -151,9 +151,8 @@ function setupGame(){
                 triggerEndedEvent(currentMusic);
                 return;
             }
-
+            // play again on the bottom of the canvas while game time
             if(playButtons[i].id == "canvas-play-again"){
-                console.log("first")
                 clear();
                 newGame(true);
                 return;

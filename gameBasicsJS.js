@@ -368,7 +368,6 @@ function newGame(resetLife=false) {
     gamePoints = 0
 
     if(!resetLife){
-        console.log("second")
         psilot = 3
     }
 
