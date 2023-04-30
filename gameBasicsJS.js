@@ -14,6 +14,9 @@ var spaceshipImage  // Spaceship Image
 var bgImage     // Canvas background
 var chicken     // The Bad Spaceship
 var chickenImage1    // Image For Bad Spaceship
+var chickenImage2 
+var chickenImage3  
+var chickenImage4  
 var chickens2DArray     // 2D Array For The 5X4 Bad Spaceships
 var defualtChickenCoordinateX   // Default X to place the bad spaceships
 var defualtChickenCoordinateY   // Default y to place the bad spaceships
